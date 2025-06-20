@@ -138,6 +138,7 @@ const popularCities = [
 export default function RestaurantsPage() {
   const [selectedCity, setSelectedCity] = useState("")
   const [selectedRegion, setSelectedRegion] = useState("")
+  const [selectedType, setSelectedType] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
@@ -156,12 +157,13 @@ export default function RestaurantsPage() {
   const filteredRestaurants = restaurants.filter((restaurant) => {
     const matchesCity = !selectedCity || restaurant.city === selectedCity;
     const matchesRegion = selectedRegion === "all" || !selectedRegion || restaurant.region === selectedRegion;
+    const matchesType = !selectedType || restaurant.type.toLowerCase().includes(selectedType.toLowerCase());
     const matchesSearch =
       !searchQuery ||
       restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       restaurant.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
       restaurant.region.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCity && matchesRegion && matchesSearch;
+    return matchesCity && matchesRegion && matchesType && matchesSearch;
   })
 
   const sortedRestaurants = [...filteredRestaurants].sort((a, b) => a.name.localeCompare(b.name))
@@ -176,6 +178,7 @@ export default function RestaurantsPage() {
   const clearFilters = () => {
     setSelectedCity("")
     setSelectedRegion("")
+    setSelectedType("")
     setSearchQuery("")
     setSortBy("rating")
   }
@@ -294,12 +297,13 @@ export default function RestaurantsPage() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-muted-foreground">Type</label>
-                  <Select value="" onValueChange={() => {}}>
+                  <Select value={selectedType} onValueChange={setSelectedType}>
                     <SelectTrigger>
                       <Utensils className="mr-2 h-4 w-4" />
-                      <SelectValue />
+                      <SelectValue placeholder="All Types" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="">All Types</SelectItem>
                       <SelectItem value="georgian">Georgian</SelectItem>
                       <SelectItem value="european">European</SelectItem>
                       <SelectItem value="asian">Asian</SelectItem>
@@ -357,13 +361,36 @@ export default function RestaurantsPage() {
                     </SelectContent>
                   </Select>
                 </div>
+                <div className="space-y-3">
+                  <label className="text-sm font-medium">Type</label>
+                  <Select value={selectedType} onValueChange={setSelectedType}>
+                    <SelectTrigger>
+                      <Utensils className="mr-2 h-4 w-4" />
+                      <SelectValue placeholder="All Types" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="">All Types</SelectItem>
+                      <SelectItem value="georgian">Georgian</SelectItem>
+                      <SelectItem value="european">European</SelectItem>
+                      <SelectItem value="asian">Asian</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <div className="bg-purple-100 dark:bg-purple-900/40 rounded-lg p-3 text-center mt-6">
                   <div className="text-xs text-muted-foreground mb-1">Feeling adventurous?</div>
-                  <Button size="sm" variant="secondary" onClick={() => {
-                    const random = restaurants[Math.floor(Math.random() * restaurants.length)];
-                    if (random) window.scrollTo({ top: 0, behavior: "smooth" });
-                    setSearchQuery(random?.name || "");
-                  }}>Suggest a Random Restaurant</Button>
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    className="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold rounded-xl shadow-lg hover:from-purple-600 hover:to-blue-600 hover:scale-105 transition-all"
+                    onClick={() => {
+                      const random = restaurants[Math.floor(Math.random() * restaurants.length)];
+                      if (random) window.scrollTo({ top: 0, behavior: "smooth" });
+                      setSearchQuery(random?.name || "");
+                    }}
+                  >
+                    Suggest a Random Restaurant
+                  </Button>
                 </div>
                 <Button variant="outline" className="w-full" onClick={clearFilters}>
                   Clear Filters
@@ -426,13 +453,13 @@ export default function RestaurantsPage() {
                                   await navigator.share({
                                     title: restaurant.name,
                                     text: `${restaurant.city}, ${restaurant.region}`,
-                                    url: `${window.location.origin}/restaurant/${restaurant.id}`,
+                                    url: `${window.location.origin}/restaurants/${restaurant.id}`,
                                   })
                                 } catch (err) {
                                   console.log("Error sharing:", err)
                                 }
                               } else {
-                                navigator.clipboard.writeText(`${window.location.origin}/restaurant/${restaurant.id}`)
+                                navigator.clipboard.writeText(`${window.location.origin}/restaurants/${restaurant.id}`)
                                 alert("Restaurant link copied to clipboard!")
                               }
                             }}
