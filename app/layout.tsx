@@ -23,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/placeholder-logo.png" />
         <Script
           id="adsense-script"
           async
