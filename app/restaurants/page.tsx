@@ -356,9 +356,13 @@ export default function RestaurantsPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="">All Types</SelectItem>
-                      {allTypes.map(type => (
-                        <SelectItem key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</SelectItem>
-                      ))}
+                      {allTypes
+                        .filter(type => type)
+                        .map(type => (
+                          <SelectItem key={type} value={type}>
+                            {type.charAt(0).toUpperCase() + type.slice(1)}
+                          </SelectItem>
+                        ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -421,9 +425,13 @@ export default function RestaurantsPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="">All Types</SelectItem>
-                      {allTypes.map(type => (
-                        <SelectItem key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</SelectItem>
-                      ))}
+                      {allTypes
+                        .filter(type => type)
+                        .map(type => (
+                          <SelectItem key={type} value={type}>
+                            {type.charAt(0).toUpperCase() + type.slice(1)}
+                          </SelectItem>
+                        ))}
                     </SelectContent>
                   </Select>
                 </div>
