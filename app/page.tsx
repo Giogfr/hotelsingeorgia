@@ -91,17 +91,17 @@ export default function LandingPage() {
           </span>
               </Link>
       </div>
-      {/* Enhanced Trip.com Affiliate Button */}
+      {/* Trip.com Affiliate Button - styled to match Hotels/Restaurants */}
       <div className="flex justify-center mt-8 mb-4">
         <a
           href="https://tp.media/r?marker=641673&trs=427893&p=8626&u=https%3A%2F%2Ftrip.com&campaign_id=121"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white text-lg md:text-xl font-bold rounded-full shadow-xl hover:scale-105 hover:from-blue-600 hover:to-blue-800 transition-all duration-200 border-2 border-blue-400"
+          className="flex items-center gap-3 px-12 py-8 text-2xl font-semibold text-foreground border border-muted bg-card rounded-xl shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-blue-500 transition-all min-w-[220px] transition-transform duration-150"
           aria-label="Book hotels in Georgia and worldwide on Trip.com (affiliate link)"
         >
-          <img src="https://content.tripcdn.com/favicon.ico" alt="Trip.com" className="w-7 h-7 rounded bg-white p-1" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.12)' }} />
-          Book hotels in Georgia and worldwide on Trip.com
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Trip.com_logo.svg" alt="Trip.com" className="w-8 h-8" style={{ background: 'white', borderRadius: '0.5rem' }} />
+          <span>Book hotels in Georgia and worldwide on Trip.com</span>
         </a>
       </div>
       <div className="mt-16 w-full max-w-3xl">
