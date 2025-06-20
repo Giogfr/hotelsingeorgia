@@ -122,6 +122,7 @@ export default function HotelsPage() {
   const [mounted, setMounted] = useState(false)
   const [funFactIndex, setFunFactIndex] = useState(0)
   const [animate, setAnimate] = useState(false)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -236,37 +237,40 @@ export default function HotelsPage() {
                 {t("contact")}
               </Link>
             </nav>
-            <div className="flex items-center space-x-4">
+            <button className="md:hidden p-2" onClick={() => setMobileNavOpen(!mobileNavOpen)}>
+              <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </button>
+            <div className="flex items-center space-x-2 md:space-x-4">
               <a
                 href="https://www.donationalerts.com/r/gio00"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-white font-semibold shadow-lg hover:scale-105 transition-transform text-sm"
+                className="inline-flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-white font-semibold shadow-lg hover:scale-105 transition-transform text-xs md:text-sm"
               >
                 <Heart className="w-4 h-4 text-white animate-pulse" />
                 Donate
               </a>
               <Select value={selectedLanguage} onValueChange={(val) => setSelectedLanguage(val as Language)}>
-                <SelectTrigger className="w-32">
+                <SelectTrigger className="w-24 md:w-32">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="en">
                     <span className="flex items-center gap-2">
                       <span>🇺🇸</span>
-                      <span className="text-sm">English</span>
+                      <span className="text-xs md:text-sm">English</span>
                     </span>
                   </SelectItem>
                   <SelectItem value="ka">
                     <span className="flex items-center gap-2">
                       <span>🇬🇪</span>
-                      <span className="text-sm">ქართული</span>
+                      <span className="text-xs md:text-sm">ქართული</span>
                     </span>
                   </SelectItem>
                   <SelectItem value="es">
                     <span className="flex items-center gap-2">
                       <span>🇪🇸</span>
-                      <span className="text-sm">Español</span>
+                      <span className="text-xs md:text-sm">Español</span>
                     </span>
                   </SelectItem>
                 </SelectContent>
@@ -275,6 +279,14 @@ export default function HotelsPage() {
               <UserNav />
             </div>
           </div>
+          {mobileNavOpen && (
+            <nav className="md:hidden flex flex-col space-y-2 mt-2 bg-background rounded-lg shadow p-4">
+              <Link href="/hotels" className="text-base font-medium hover:text-primary transition-colors" onClick={() => setMobileNavOpen(false)}>{t("hotels")}</Link>
+              <Link href="/restaurants" className="text-base font-medium hover:text-primary transition-colors" onClick={() => setMobileNavOpen(false)}>Restaurants</Link>
+              <Link href="/about" className="text-base font-medium hover:text-primary transition-colors" onClick={() => setMobileNavOpen(false)}>{t("about")}</Link>
+              <Link href="/contact" className="text-base font-medium hover:text-primary transition-colors" onClick={() => setMobileNavOpen(false)}>{t("contact")}</Link>
+            </nav>
+          )}
         </div>
       </header>
       <div className="container mx-auto px-4 mt-6 mb-4">
@@ -302,9 +314,9 @@ export default function HotelsPage() {
             </div>
           </div>
           <Card className="max-w-6xl mx-auto animate-in slide-in-from-bottom-4 duration-1000 delay-400">
-            <CardContent className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
-                <div className="md:col-span-1 flex flex-col justify-center">
+            <CardContent className="p-4 md:p-6">
+              <div className="flex flex-col md:grid md:grid-cols-3 gap-4 items-stretch">
+                <div className="md:col-span-1 flex flex-col justify-center mb-4 md:mb-0">
                   <label className="text-sm font-medium text-muted-foreground">{t("where")}</label>
                   <div className="relative">
                     <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -341,10 +353,10 @@ export default function HotelsPage() {
           </Card>
         </div>
       </section>
-      <section className="container mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-4 text-primary">Popular Cities</h2>
-        <p className="text-muted-foreground mb-8">Discover Georgia by exploring its top cities</p>
-        <div className="flex flex-col md:flex-row gap-8 justify-center">
+      <section className="container mx-auto px-2 md:px-4 py-8 md:py-12">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-primary">Popular Cities</h2>
+        <p className="text-muted-foreground mb-6 md:mb-8">Discover Georgia by exploring its top cities</p>
+        <div className="flex gap-4 md:gap-8 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0">
           {popularCities.map((city) => {
             const count = hotels.filter(h => h.city === city.name).length;
             return (
@@ -366,9 +378,9 @@ export default function HotelsPage() {
           })}
         </div>
       </section>
-      <section id="search-results" className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-1">
+      <section id="search-results" className="container mx-auto px-2 md:px-4 py-6 md:py-8">
+        <div className="flex flex-col lg:grid lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="lg:col-span-1 order-2 lg:order-1 mb-6 lg:mb-0">
             <Card className="sticky top-24">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -405,7 +417,7 @@ export default function HotelsPage() {
               </CardContent>
             </Card>
           </div>
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 order-1 lg:order-2">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold">
                 {mounted ? `${sortedHotels.length} ${t("hotelsFound")}` : ""}
@@ -419,7 +431,7 @@ export default function HotelsPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               {mounted ? (
                 sortedHotels.map((hotel, index) => (
                   <Card
@@ -499,7 +511,7 @@ export default function HotelsPage() {
           </div>
         </div>
       </section>
-      <footer className="bg-gray-900 dark:bg-black text-white py-12 mt-16">
+      <footer className="bg-gray-900 dark:bg-black text-white py-8 md:py-12 mt-12 md:mt-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
@@ -587,8 +599,8 @@ export default function HotelsPage() {
               </ul>
             </div>
           </div>
-          <Separator className="my-8 bg-gray-700" />
-          <div className="text-center text-gray-300">
+          <Separator className="my-6 md:my-8 bg-gray-700" />
+          <div className="text-center text-gray-300 text-xs md:text-base">
             <p>&copy; 2024 GeorgiaStay. {t("allRightsReserved")}.</p>
           </div>
         </div>

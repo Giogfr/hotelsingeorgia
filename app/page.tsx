@@ -91,6 +91,16 @@ export default function LandingPage() {
           </span>
               </Link>
       </div>
+      {/* Trip.com Affiliate Button */}
+      <a
+        href="https://trip.tpx.lv/xtukIV2Z"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-8 inline-block px-8 py-4 bg-blue-600 text-white text-xl font-bold rounded-lg shadow-lg hover:bg-blue-700 transition text-center"
+        aria-label="Book hotels on Trip.com (affiliate link)"
+      >
+        Book hotels on Trip.com
+      </a>
       <div className="mt-16 w-full max-w-3xl">
         <h2 className="text-2xl font-bold mb-6 text-primary text-center">Popular Cities</h2>
         <div className="flex flex-col md:flex-row gap-8 justify-center">
