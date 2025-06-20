@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -31,6 +31,7 @@ import {
 import Image from "next/image"
 import Link from "next/link"
 import { useTranslation, type Language } from "@/lib/translations"
+import RestaurantsLoading from './loading'
 
 // Placeholder restaurant data
 const hardcodedRestaurants: Array<{
@@ -172,12 +173,8 @@ const restaurantFunFacts = [
   "Traditional Georgian hospitality means guests are treated like gifts from God — no one leaves hungry."
 ];
 
-// Generate unique food types from restaurant data (case-insensitive, display capitalized)
-const allTypes = Array.from(new Set(
-  hardcodedRestaurants.flatMap(r => r.type.split(/[,/]/).map(t => t.trim().toLowerCase()))
-)).filter(Boolean).sort();
-
 export default function RestaurantsPage() {
+  const [delayDone, setDelayDone] = useState(false)
   const [selectedCity, setSelectedCity] = useState("")
   const [selectedRegion, setSelectedRegion] = useState("")
   const [selectedType, setSelectedType] = useState("")
@@ -190,21 +187,30 @@ export default function RestaurantsPage() {
   const [mounted, setMounted] = useState(false)
   const [factIndex, setFactIndex] = useState(0)
 
+  useEffect(() => {
+    const timer = setTimeout(() => setDelayDone(true), 1000)
+    return () => clearTimeout(timer)
+  }, [])
+
   useEffect(() => { setMounted(true) }, [])
 
-  const filteredRestaurants = restaurants.filter((restaurant) => {
-    const matchesCity = !selectedCity || restaurant.city === selectedCity;
-    const matchesRegion = selectedRegion === "all" || !selectedRegion || restaurant.region === selectedRegion;
-    const matchesType = !selectedType || restaurant.type.toLowerCase().includes(selectedType);
-    const matchesSearch =
-      !searchQuery ||
-      restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      restaurant.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      restaurant.region.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCity && matchesRegion && matchesType && matchesSearch;
-  })
+  const filteredRestaurants = useMemo(() => {
+    return restaurants.filter((restaurant) => {
+      const matchesCity = !selectedCity || restaurant.city === selectedCity;
+      const matchesRegion = selectedRegion === "all" || !selectedRegion || restaurant.region === selectedRegion;
+      const matchesType = !selectedType || restaurant.type.toLowerCase().includes(selectedType);
+      const matchesSearch =
+        !searchQuery ||
+        restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        restaurant.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        restaurant.region.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCity && matchesRegion && matchesType && matchesSearch;
+    });
+  }, [restaurants, selectedCity, selectedRegion, selectedType, searchQuery]);
 
-  const sortedRestaurants = [...filteredRestaurants].sort((a, b) => a.name.localeCompare(b.name))
+  const sortedRestaurants = useMemo(() => {
+    return [...filteredRestaurants].sort((a, b) => a.name.localeCompare(b.name));
+  }, [filteredRestaurants]);
 
   const handleSearch = () => {
     const resultsSection = document.getElementById("search-results")
@@ -258,12 +264,27 @@ export default function RestaurantsPage() {
   const nextFact = () => setFactIndex((factIndex + 1) % restaurantFunFacts.length)
   const prevFact = () => setFactIndex((factIndex - 1 + restaurantFunFacts.length) % restaurantFunFacts.length)
 
+  const allTypes = useMemo(() => (
+    Array.from(
+      new Set(
+        hardcodedRestaurants
+          .map(r => r.type)
+          .filter(Boolean)
+          .flatMap(type => type.split(/[,/]/).map(t => t.trim().toLowerCase()))
+          .filter(type => type && type !== "")
+      )
+    ).sort()
+  ), []);
+
+  if (!delayDone) return <RestaurantsLoading />;
+
   return (
     <div className="min-h-screen bg-background transition-colors">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
+              <ArrowLeft className="w-5 h-5 mr-1 text-primary hidden sm:inline" />
               <Image src="/placeholder-logo.png" alt="GeorgiaStay Logo" width={32} height={32} />
               <span className="text-2xl font-bold text-primary">GeorgiaStay</span>
             </Link>
@@ -299,12 +320,6 @@ export default function RestaurantsPage() {
           </div>
         </div>
       </header>
-      <div className="container mx-auto px-4 mt-6 mb-4">
-        <Link href="/" className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold shadow-lg hover:scale-105 transition-transform">
-          <ArrowLeft className="w-5 h-5" />
-          <span>Back</span>
-        </Link>
-      </div>
       <section className="relative bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-700 dark:from-purple-900 dark:via-blue-900 dark:to-indigo-950 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-black/20" />
         <div className="container mx-auto px-4 relative z-10">
@@ -355,14 +370,10 @@ export default function RestaurantsPage() {
                       <SelectValue placeholder="All Types" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Types</SelectItem>
-                      {allTypes
-                        .filter(type => type && type !== "")
-                        .map(type => (
-                          <SelectItem key={type} value={type}>
-                            {type.charAt(0).toUpperCase() + type.slice(1)}
-                          </SelectItem>
-                        ))}
+                      <SelectItem value="all">All Types</SelectItem>
+                      {allTypes.map(type => (
+                        <SelectItem key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -424,14 +435,10 @@ export default function RestaurantsPage() {
                       <SelectValue placeholder="All Types" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Types</SelectItem>
-                      {allTypes
-                        .filter(type => type && type !== "")
-                        .map(type => (
-                          <SelectItem key={type} value={type}>
-                            {type.charAt(0).toUpperCase() + type.slice(1)}
-                          </SelectItem>
-                        ))}
+                      <SelectItem value="all">All Types</SelectItem>
+                      {allTypes.map(type => (
+                        <SelectItem key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>

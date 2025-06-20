@@ -128,7 +128,7 @@ export class GooglePlacesService {
 
       return amenities
     }
-
+w
     return {
       id: googleHotel.place_id,
       name: googleHotel.name,

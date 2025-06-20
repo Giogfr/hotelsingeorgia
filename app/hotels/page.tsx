@@ -38,6 +38,7 @@ import {
   ChevronDown,
   ArrowLeft,
   HelpCircle,
+  Building2,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -46,6 +47,7 @@ import { type ProcessedHotel, georgianCitiesWithCoords } from "@/lib/google-plac
 import { fetchAllGeorgiaHotels, fetchHotelsByCity } from "@/app/actions/google-places"
 import { useTranslation, type Language } from "@/lib/translations"
 import { hardcodedHotels } from '@/lib/hardcoded-hotels'
+import HotelsLoading from './loading'
 
 const georgianCities = georgianCitiesWithCoords.map((city) => city.name)
 
@@ -109,6 +111,7 @@ const funFacts = [
 ]
 
 export default function HotelsPage() {
+  const [delayDone, setDelayDone] = useState(false)
   const [selectedCity, setSelectedCity] = useState("")
   const [selectedRegion, setSelectedRegion] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
@@ -124,8 +127,12 @@ export default function HotelsPage() {
   const [animate, setAnimate] = useState(false)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
-  useEffect(() => { setMounted(true) }, [])
+  useEffect(() => {
+    const timer = setTimeout(() => setDelayDone(true), 1000)
+    return () => clearTimeout(timer)
+  }, [])
 
+  useEffect(() => { setMounted(true) }, [])
   useEffect(() => {
     const savedFavorites = localStorage.getItem("hotel-favorites")
     if (savedFavorites) {
@@ -214,12 +221,15 @@ export default function HotelsPage() {
     return () => clearInterval(interval)
   }, [])
 
+  if (!delayDone) return <HotelsLoading />;
+
   return (
     <div className="min-h-screen bg-background transition-colors">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
+              <ArrowLeft className="w-5 h-5 mr-1 text-primary hidden sm:inline" />
               <Image src="/placeholder-logo.png" alt="GeorgiaStay Logo" width={32} height={32} />
               <span className="text-2xl font-bold text-primary">GeorgiaStay</span>
             </Link>
@@ -289,12 +299,6 @@ export default function HotelsPage() {
           )}
         </div>
       </header>
-      <div className="container mx-auto px-4 mt-6 mb-4">
-        <Link href="/" className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold shadow-lg hover:scale-105 transition-transform">
-          <ArrowLeft className="w-5 h-5" />
-          <span>Back</span>
-        </Link>
-      </div>
       <section className="relative bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-700 dark:from-purple-900 dark:via-blue-900 dark:to-indigo-950 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-black/20" />
         <div className="container mx-auto px-4 relative z-10">
@@ -511,6 +515,18 @@ export default function HotelsPage() {
           </div>
         </div>
       </section>
+      <div className="flex justify-center my-10">
+        <a
+          href="https://tp.media/r?marker=641673&trs=427893&p=8626&u=https%3A%2F%2Ftrip.com&campaign_id=121"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-700 text-white text-lg sm:text-2xl font-bold shadow-xl hover:scale-105 hover:shadow-2xl transition-all duration-200 border-none focus:outline-none focus:ring-4 focus:ring-purple-400 focus:ring-offset-2"
+          aria-label="Book hotels in Georgia and worldwide on Trip.com (affiliate link)"
+        >
+          <Building2 className="w-7 h-7 text-white drop-shadow" />
+          Book hotels worldwide on Trip.com
+        </a>
+      </div>
       <footer className="bg-gray-900 dark:bg-black text-white py-8 md:py-12 mt-12 md:mt-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
