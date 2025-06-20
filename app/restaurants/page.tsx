@@ -357,7 +357,7 @@ export default function RestaurantsPage() {
                     <SelectContent>
                       <SelectItem value="">All Types</SelectItem>
                       {allTypes
-                        .filter(type => type)
+                        .filter(type => type && type !== "")
                         .map(type => (
                           <SelectItem key={type} value={type}>
                             {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -426,7 +426,7 @@ export default function RestaurantsPage() {
                     <SelectContent>
                       <SelectItem value="">All Types</SelectItem>
                       {allTypes
-                        .filter(type => type)
+                        .filter(type => type && type !== "")
                         .map(type => (
                           <SelectItem key={type} value={type}>
                             {type.charAt(0).toUpperCase() + type.slice(1)}
