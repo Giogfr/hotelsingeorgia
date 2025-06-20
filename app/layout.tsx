@@ -30,6 +30,16 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
+        <Script id="travelpayouts-verification" strategy="afterInteractive" dangerouslySetInnerHTML={{
+          __html: `
+            (function () {
+                var script = document.createElement("script");
+                script.async = 1;
+                script.src = 'https://emrld.cc/NDI3ODkz.js?t=427893';
+                document.head.appendChild(script);
+            })();
+          `
+        }} />
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
