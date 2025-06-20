@@ -135,6 +135,43 @@ const popularCities = [
   { name: "Kutaisi", image: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80" },
 ];
 
+// Add fun facts array for restaurants
+const restaurantFunFacts = [
+  "Khinkali, Georgia's dumpling, is traditionally eaten with your hands — bite it, sip the broth inside, then eat the rest.",
+  "Khachapuri is Georgia's iconic cheese-filled bread — the Adjarian version looks like a boat and includes egg and butter on top.",
+  "Each region in Georgia has its own type of khachapuri — including Imeretian, Megrelian, and Rachuli styles.",
+  "Sulguni is a brined Georgian cheese, often used in khachapuri and eaten fresh or smoked.",
+  "Churchkhela is a natural Georgian candy made from grape juice and nuts — often called \"Georgian Snickers.\"",
+  "Pkhali is a vegetarian dish made from minced vegetables, walnuts, garlic, and herbs — often served as a cold appetizer.",
+  "Georgian cuisine uses walnuts in an unusually large variety of dishes — both sweet and savory.",
+  "Mtsvadi is Georgian shashlik — grilled meat, often made over grapevine wood for extra flavor.",
+  "Tkemali is a sour plum sauce, served with meat and potatoes — made from wild Georgian plums.",
+  "Ajika is a spicy red or green chili paste from western Georgia, used as a condiment or marinade.",
+  "Badrijani Nigvzit is eggplant rolled with walnut-garlic paste and topped with pomegranate seeds.",
+  "Georgian feasts are called 'Supra' and are led by a toastmaster called a \"Tamada.\"",
+  "A traditional Supra can include over 20 different dishes, all brought out continuously during the meal.",
+  "Every meal in Georgia includes generous amounts of fresh herbs like coriander, tarragon, and parsley.",
+  "Georgian wine is often made in qvevri — large clay vessels buried underground.",
+  "Georgia is considered the birthplace of wine, with winemaking traditions over 8,000 years old.",
+  "Satsivi is a cold walnut sauce often served with turkey or chicken, especially during winter holidays.",
+  "Chakapuli is a spring stew made from lamb or veal, tarragon, and green sour plums.",
+  "Most Georgian bread is baked in a tone — a deep circular clay oven similar to a tandoor.",
+  "Shotis puri is a canoe-shaped bread baked against the sides of the tone oven.",
+  "Pelamushi is a dessert made from grape juice and corn flour, served cold like pudding.",
+  "The Imeruli khachapuri is circular and contains cheese only inside, unlike the open Adjaruli version.",
+  "Georgian cuisine often blends European, Middle Eastern, and Central Asian flavors.",
+  "Jonjoli is a pickled flower bud found in traditional Georgian salads and sides.",
+  "Almost every family in rural Georgia produces its own wine and keeps a personal wine cellar.",
+  "Georgia has over 500 native grape varieties — more than almost any country in the world.",
+  "Traditional Georgian meals include both meat and vegetarian options, reflecting a rich agricultural tradition.",
+  "Kvass is a traditional fermented drink made from bread, mildly alcoholic and very refreshing.",
+  "Chvishtari is a cheesy cornbread from the Svaneti region, often eaten warm with butter.",
+  "Elarji is a thick cornmeal dish mixed with stretchy sulguni cheese — a Megrelian favorite.",
+  "Matsoni is a fermented milk product similar to yogurt — often eaten plain or with honey and nuts.",
+  "In many Georgian villages, food is still cooked in wood-fired ovens or open hearths.",
+  "Traditional Georgian hospitality means guests are treated like gifts from God — no one leaves hungry."
+];
+
 export default function RestaurantsPage() {
   const [selectedCity, setSelectedCity] = useState("")
   const [selectedRegion, setSelectedRegion] = useState("")
@@ -274,6 +311,17 @@ export default function RestaurantsPage() {
             <p className="text-xl md:text-2xl opacity-90 animate-in slide-in-from-bottom-4 duration-1000 delay-200">
               {t("findBestPlacesToEat")}
             </p>
+          </div>
+          {/* Fun Facts Section */}
+          <div className="max-w-3xl mx-auto mb-10">
+            <div className="bg-gradient-to-r from-purple-900/80 to-blue-900/80 rounded-2xl shadow-lg p-6 sm:p-8 text-white">
+              <h3 className="text-lg sm:text-2xl font-bold mb-4 text-center">🍇 Fun Facts about Georgian Cuisine</h3>
+              <ul className="list-disc list-inside space-y-2 max-h-64 overflow-y-auto text-sm sm:text-base">
+                {restaurantFunFacts.map((fact, idx) => (
+                  <li key={idx}>{fact}</li>
+                ))}
+              </ul>
+            </div>
           </div>
           <Card className="max-w-6xl mx-auto animate-in slide-in-from-bottom-4 duration-1000 delay-400">
             <CardContent className="p-6">
