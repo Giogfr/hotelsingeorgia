@@ -77,16 +77,16 @@ export default function LandingPage() {
         <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-2 md:mb-4 text-primary">Welcome to GeorgiaStay</h1>
         <p className="text-lg sm:text-xl md:text-2xl opacity-90 mb-4 md:mb-8">What are you looking for?</p>
       </div>
-      <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 w-full max-w-xl justify-center items-center">
-        <Link href="/hotels" className="block rounded-xl border border-muted bg-card px-6 py-4 sm:px-12 sm:py-8 text-lg sm:text-2xl font-semibold text-foreground shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-primary transition-all min-w-[160px] sm:min-w-[220px] transition-transform duration-150 text-center w-full sm:w-auto">
-          <span className="flex items-center justify-center gap-2 sm:gap-4">
-            <Building2 className="w-6 h-6 sm:w-7 sm:h-7 text-muted-foreground" />
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 w-full max-w-xs sm:max-w-xl justify-center items-center mx-auto">
+        <Link href="/hotels" className="block rounded-xl border border-muted bg-card px-3 py-2 sm:px-8 sm:py-6 text-sm sm:text-xl font-semibold text-foreground shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-primary transition-all min-w-[90px] sm:min-w-[180px] transition-transform duration-150 text-center w-full sm:w-auto">
+          <span className="flex items-center justify-center gap-1 sm:gap-3">
+            <Building2 className="w-4 h-4 sm:w-6 sm:h-6 text-muted-foreground" />
             <span>Hotels</span>
           </span>
         </Link>
-        <Link href="/restaurants" className="block rounded-xl border border-muted bg-card px-6 py-4 sm:px-12 sm:py-8 text-lg sm:text-2xl font-semibold text-foreground shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-primary transition-all min-w-[160px] sm:min-w-[220px] transition-transform duration-150 text-center w-full sm:w-auto">
-          <span className="flex items-center justify-center gap-2 sm:gap-4">
-            <Utensils className="w-6 h-6 sm:w-7 sm:h-7 text-muted-foreground" />
+        <Link href="/restaurants" className="block rounded-xl border border-muted bg-card px-3 py-2 sm:px-8 sm:py-6 text-sm sm:text-xl font-semibold text-foreground shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-primary transition-all min-w-[90px] sm:min-w-[180px] transition-transform duration-150 text-center w-full sm:w-auto">
+          <span className="flex items-center justify-center gap-1 sm:gap-3">
+            <Utensils className="w-4 h-4 sm:w-6 sm:h-6 text-muted-foreground" />
             <span>Restaurants</span>
           </span>
         </Link>
