@@ -172,7 +172,7 @@ const restaurantFunFacts = [
   "Traditional Georgian hospitality means guests are treated like gifts from God — no one leaves hungry."
 ];
 
-// Generate unique food types from restaurant data
+// Generate unique food types from restaurant data (case-insensitive, display capitalized)
 const allTypes = Array.from(new Set(
   hardcodedRestaurants.flatMap(r => r.type.split(/[,/]/).map(t => t.trim().toLowerCase()))
 )).filter(Boolean).sort();
@@ -317,7 +317,7 @@ export default function RestaurantsPage() {
               {t("findBestPlacesToEat")}
             </p>
           </div>
-          {/* Fun Facts Section */}
+          {/* Fun Facts Section - always visible, right after hero */}
           <div className="max-w-3xl mx-auto mb-10">
             <div className="bg-gradient-to-r from-purple-900/80 to-blue-900/80 rounded-2xl shadow-lg p-6 sm:p-8 text-white">
               <h3 className="text-lg sm:text-2xl font-bold mb-4 text-center">🍇 Fun Facts about Georgian Cuisine</h3>
