@@ -91,13 +91,12 @@ export default function LandingPage() {
           </span>
         </Link>
       </div>
-      {/* Trip.com Affiliate Button - clean, matches Hotels/Restaurants */}
-      <div className="flex justify-center mt-6 mb-4 w-full max-w-xl">
+      <div className="flex justify-center mt-6 mb-4 w-full max-w-xs sm:max-w-xl mx-auto">
         <a
           href="https://tp.media/r?marker=641673&trs=427893&p=8626&u=https%3A%2F%2Ftrip.com&campaign_id=121"
           target="_blank"
           rel="noopener noreferrer"
-          className="block rounded-xl border border-muted bg-card px-4 py-4 sm:px-12 sm:py-8 text-base sm:text-2xl font-semibold text-foreground shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-primary transition-all w-full text-center"
+          className="block rounded-xl border border-muted bg-card px-3 py-2 sm:px-6 sm:py-4 text-sm sm:text-lg font-semibold text-foreground shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-primary transition-all w-full text-center"
           aria-label="Book hotels in Georgia and worldwide on Trip.com (affiliate link)"
         >
           Book hotels worldwide on Trip.com
@@ -105,7 +104,7 @@ export default function LandingPage() {
       </div>
       <div className="mt-10 sm:mt-16 w-full max-w-3xl">
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-primary text-center">Popular Cities</h2>
-        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 justify-center">
+        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 justify-center items-center mx-auto">
           {featuredCities.map((city) => {
             const count = hardcodedHotels.filter(h => h.city === city.name).length;
             return (

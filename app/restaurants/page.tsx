@@ -380,9 +380,9 @@ export default function RestaurantsPage() {
                 <div className="bg-purple-100 dark:bg-purple-900/40 rounded-lg p-3 text-center mt-6">
                   <div className="text-xs text-muted-foreground mb-1">Feeling adventurous?</div>
                   <Button
-                    size="lg"
+                    size="sm"
                     variant="secondary"
-                    className="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold rounded-xl shadow-lg hover:from-purple-600 hover:to-blue-600 hover:scale-105 transition-all"
+                    className="w-full font-semibold rounded-lg shadow hover:scale-105 transition-all"
                     onClick={() => {
                       const random = restaurants[Math.floor(Math.random() * restaurants.length)];
                       if (random) window.scrollTo({ top: 0, behavior: "smooth" });
