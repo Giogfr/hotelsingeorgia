@@ -91,7 +91,7 @@ export default function LandingPage() {
           </span>
               </Link>
       </div>
-      {/* Trip.com Affiliate Button - styled to match Hotels/Restaurants exactly */}
+      {/* Trip.com Affiliate Button - clean, matches Hotels/Restaurants */}
       <div className="flex justify-center mt-8 mb-4">
         <a
           href="https://tp.media/r?marker=641673&trs=427893&p=8626&u=https%3A%2F%2Ftrip.com&campaign_id=121"
