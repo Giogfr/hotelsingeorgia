@@ -94,7 +94,7 @@ export default function LandingPage() {
       <div style={{ color: 'red', fontWeight: 'bold' }}>TEST123</div>
       {/* Trip.com Affiliate Button */}
       <a
-        href="https://trip.tpx.lv/xtukIV2Z"
+        href="https://tp.media/r?marker=641673&trs=427893&p=8626&u=https%3A%2F%2Ftrip.com&campaign_id=121"
         target="_blank"
         rel="noopener noreferrer"
         className="mt-8 inline-block px-8 py-4 bg-blue-600 text-white text-xl font-bold rounded-lg shadow-lg hover:bg-blue-700 transition text-center"
