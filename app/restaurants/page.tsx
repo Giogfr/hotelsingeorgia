@@ -182,12 +182,13 @@ export default function RestaurantsPage() {
   const [selectedRegion, setSelectedRegion] = useState("")
   const [selectedType, setSelectedType] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>("ka")
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>("en")
   const { t } = useTranslation(selectedLanguage)
   const [restaurants, setRestaurants] = useState(hardcodedRestaurants)
   const [sortBy, setSortBy] = useState("rating")
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [factIndex, setFactIndex] = useState(0)
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -254,6 +255,9 @@ export default function RestaurantsPage() {
     localStorage.setItem('language', selectedLanguage)
   }, [selectedLanguage])
 
+  const nextFact = () => setFactIndex((factIndex + 1) % restaurantFunFacts.length)
+  const prevFact = () => setFactIndex((factIndex - 1 + restaurantFunFacts.length) % restaurantFunFacts.length)
+
   return (
     <div className="min-h-screen bg-background transition-colors">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
@@ -305,22 +309,22 @@ export default function RestaurantsPage() {
         <div className="absolute inset-0 bg-black/20" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-in slide-in-from-bottom-4 duration-1000">
-              {t("discoverRestaurants")}
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-4 animate-in slide-in-from-bottom-4 duration-1000 drop-shadow-lg">
+              Discover the Best Restaurants in Georgia
             </h1>
-            <p className="text-xl md:text-2xl opacity-90 animate-in slide-in-from-bottom-4 duration-1000 delay-200">
-              {t("findBestPlacesToEat")}
+            <p className="text-xl md:text-2xl opacity-90 animate-in slide-in-from-bottom-4 duration-1000 delay-200 font-medium">
+              Explore authentic flavors, hidden gems, and local favorites.
             </p>
           </div>
-          {/* Fun Facts Section - always visible, right after hero */}
-          <div className="max-w-3xl mx-auto mb-10">
-            <div className="bg-gradient-to-r from-purple-900/80 to-blue-900/80 rounded-2xl shadow-lg p-6 sm:p-8 text-white">
-              <h3 className="text-lg sm:text-2xl font-bold mb-4 text-center">🍇 Fun Facts about Georgian Cuisine</h3>
-              <ul className="list-disc list-inside space-y-2 max-h-64 overflow-y-auto text-sm sm:text-base">
-                {restaurantFunFacts.map((fact, idx) => (
-                  <li key={idx}>{fact}</li>
-                ))}
-              </ul>
+          {/* Fun Facts Carousel */}
+          <div className="max-w-2xl mx-auto mb-10 flex flex-col items-center">
+            <div className="bg-gradient-to-r from-purple-900/80 to-blue-900/80 rounded-2xl shadow-lg p-6 sm:p-8 text-white w-full flex flex-col items-center">
+              <h3 className="text-lg sm:text-2xl font-bold mb-4 text-center">🍇 Fun Fact about Georgian Cuisine</h3>
+              <div className="flex items-center gap-4">
+                <button onClick={prevFact} className="text-2xl px-2 py-1 rounded hover:bg-purple-800">←</button>
+                <span className="text-base sm:text-lg text-center max-w-xs">{restaurantFunFacts[factIndex]}</span>
+                <button onClick={nextFact} className="text-2xl px-2 py-1 rounded hover:bg-purple-800">→</button>
+              </div>
             </div>
           </div>
           <Card className="max-w-6xl mx-auto animate-in slide-in-from-bottom-4 duration-1000 delay-400">
