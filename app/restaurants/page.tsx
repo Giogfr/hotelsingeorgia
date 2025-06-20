@@ -182,12 +182,7 @@ export default function RestaurantsPage() {
   const [selectedRegion, setSelectedRegion] = useState("")
   const [selectedType, setSelectedType] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>(() => {
-    if (typeof window !== 'undefined') {
-      return (localStorage.getItem('language') as Language) || 'ka';
-    }
-    return 'ka';
-  })
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>("ka")
   const { t } = useTranslation(selectedLanguage)
   const [restaurants, setRestaurants] = useState(hardcodedRestaurants)
   const [sortBy, setSortBy] = useState("rating")
