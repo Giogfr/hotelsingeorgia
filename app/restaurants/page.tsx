@@ -172,6 +172,11 @@ const restaurantFunFacts = [
   "Traditional Georgian hospitality means guests are treated like gifts from God — no one leaves hungry."
 ];
 
+// Generate unique food types from restaurant data
+const allTypes = Array.from(new Set(
+  hardcodedRestaurants.flatMap(r => r.type.split(/[,/]/).map(t => t.trim().toLowerCase()))
+)).filter(Boolean).sort();
+
 export default function RestaurantsPage() {
   const [selectedCity, setSelectedCity] = useState("")
   const [selectedRegion, setSelectedRegion] = useState("")
@@ -194,7 +199,7 @@ export default function RestaurantsPage() {
   const filteredRestaurants = restaurants.filter((restaurant) => {
     const matchesCity = !selectedCity || restaurant.city === selectedCity;
     const matchesRegion = selectedRegion === "all" || !selectedRegion || restaurant.region === selectedRegion;
-    const matchesType = !selectedType || restaurant.type.toLowerCase().includes(selectedType.toLowerCase());
+    const matchesType = !selectedType || restaurant.type.toLowerCase().includes(selectedType);
     const matchesSearch =
       !searchQuery ||
       restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -352,10 +357,9 @@ export default function RestaurantsPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="">All Types</SelectItem>
-                      <SelectItem value="georgian">Georgian</SelectItem>
-                      <SelectItem value="european">European</SelectItem>
-                      <SelectItem value="asian">Asian</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
+                      {allTypes.map(type => (
+                        <SelectItem key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -418,10 +422,9 @@ export default function RestaurantsPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="">All Types</SelectItem>
-                      <SelectItem value="georgian">Georgian</SelectItem>
-                      <SelectItem value="european">European</SelectItem>
-                      <SelectItem value="asian">Asian</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
+                      {allTypes.map(type => (
+                        <SelectItem key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
