@@ -91,6 +91,7 @@ export default function LandingPage() {
           </span>
               </Link>
       </div>
+      <div style={{ color: 'red', fontWeight: 'bold' }}>TEST123</div>
       {/* Trip.com Affiliate Button */}
       <a
         href="https://trip.tpx.lv/xtukIV2Z"
