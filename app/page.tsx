@@ -100,7 +100,7 @@ export default function LandingPage() {
           className="block rounded-xl border border-muted bg-card px-4 py-4 sm:px-12 sm:py-8 text-base sm:text-2xl font-semibold text-foreground shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-primary transition-all w-full text-center"
           aria-label="Book hotels in Georgia and worldwide on Trip.com (affiliate link)"
         >
-          Book hotels in Georgia and worldwide on Trip.com
+          Book hotels worldwide on Trip.com
         </a>
       </div>
       <div className="mt-10 sm:mt-16 w-full max-w-3xl">
@@ -112,15 +112,15 @@ export default function LandingPage() {
               <Link
                 key={city.name}
                 href={city.link}
-                className="block rounded-xl border border-muted bg-card shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-primary transition-all min-w-[140px] sm:min-w-[180px] transition-transform duration-150 text-center overflow-hidden"
+                className="block rounded-xl border border-muted bg-card shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-primary transition-all min-w-[100px] sm:min-w-[180px] max-w-xs w-full transition-transform duration-150 text-center overflow-hidden p-0"
               >
-                <div className="h-28 sm:h-40 w-full overflow-hidden">
+                <div className="h-20 xs:h-24 sm:h-40 w-full overflow-hidden">
                   <img src={city.image} alt={city.name} className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <div className="flex flex-col items-center gap-2 sm:gap-3 py-3 sm:py-6">
-                  <MapPin className="w-6 h-6 sm:w-7 sm:h-7 text-muted-foreground" />
-                  <span className="font-semibold text-base sm:text-lg">{city.name}</span>
-                  <span className="font-bold text-primary text-sm sm:text-base">{count} hotels</span>
+                <div className="flex flex-col items-center gap-1 xs:gap-2 sm:gap-3 py-2 xs:py-3 sm:py-6">
+                  <MapPin className="w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 text-muted-foreground" />
+                  <span className="font-semibold text-sm xs:text-base sm:text-lg">{city.name}</span>
+                  <span className="font-bold text-primary text-xs xs:text-sm sm:text-base">{count} hotels</span>
                 </div>
               </Link>
             );
