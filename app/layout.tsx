@@ -8,6 +8,7 @@ import ClickSpark from "./ClickSpark"
 import PageTransition from "@/components/PageTransition"
 import GlobalLoader from "@/components/GlobalLoader"
 import Image from "next/image"
+import MouseFollower from "@/components/mouse-follower"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -26,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/georgia_flag.svg" type="image/svg+xml" />
         <Script
           id="adsense-script"
           async
@@ -46,6 +47,7 @@ export default function RootLayout({
         }} />
       </head>
       <body className={inter.className}>
+        <MouseFollower />
         {/* Full-screen mountain skiing background image for the entire app */}
         <div className="fixed inset-0 w-full h-full z-0 pointer-events-none select-none overflow-hidden">
           <img
