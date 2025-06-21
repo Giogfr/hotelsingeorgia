@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.georgia.hotels"
+    namespace "com.georgia.stay"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.georgia.hotels"
+        applicationId "com.georgia.stay"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
