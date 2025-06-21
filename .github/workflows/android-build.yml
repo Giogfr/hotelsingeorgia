@@ -27,9 +27,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Capacitor
-        run: pnpm add @capacitor/cli @capacitor/core @capacitor/android
-
       - name: Remove incompatible routes for static build
         run: |
           rm -rf app/api
