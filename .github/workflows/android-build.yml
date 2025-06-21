@@ -53,18 +53,22 @@ jobs:
         run: ./android/gradlew -p android assembleDebug
 
       - name: Rename APK
-        run: mv android/app/build/outputs/apk/debug/app-debug.apk public/GeorgiaStay.apk
+        run: mv android/app/build/outputs/apk/debug/app-debug.apk GeorgiaStay.apk
 
-      - name: Commit APK
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add public/GeorgiaStay.apk
-          git commit -m "build: Add/update GeorgiaStay.apk" || echo "No changes to commit"
-          git push
+      - name: Create Release and Upload APK
+        uses: softprops/action-gh-release@v2
+        with:
+          files: GeorgiaStay.apk
+          tag_name: latest # This will always update the 'latest' release
+          name: Latest Build
+          body: "Latest release of the GeorgiaStay app."
+          prerelease: false
+          draft: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload APK as artifact
+      - name: Upload APK as artifact (for internal use)
         uses: actions/upload-artifact@v4
         with:
           name: GeorgiaStay-apk
-          path: public/GeorgiaStay.apk 
+          path: GeorgiaStay.apk 

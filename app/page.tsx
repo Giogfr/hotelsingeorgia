@@ -77,8 +77,15 @@ export default function LandingPage() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
+  const galleryImages = [
+    "https://images.unsplash.com/photo-1562818128-092a8b945c22?auto=format&fit=crop&w=600&q=80", // Tbilisi
+    "https://images.unsplash.com/photo-1598582962316-56637e67175c?auto=format&fit=crop&w=600&q=80", // Batumi
+    "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=600&q=80", // Mountains
+    "https://images.unsplash.com/photo-1516368812228-062e49c7543d?auto=format&fit=crop&w=600&q=80"  // Food
+  ];
+
   return (
-    <div className="relative min-h-screen w-full">
+    <div className="relative min-h-screen w-full overflow-hidden">
       {/* Background Image and Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
@@ -88,75 +95,60 @@ export default function LandingPage() {
       </div>
       
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-4 text-white">
-        <div className="text-center mb-8 md:mb-12 mt-20">
+      <div className="relative z-10 grid md:grid-cols-2 items-center min-h-screen p-8 text-white">
+        {/* Left Column */}
+        <div className="flex flex-col items-start text-left md:pr-10">
           <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl mb-4 text-shadow-lg">
             GeorgiaStay
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl opacity-90 mb-4 md:mb-8">
-            What are you looking for?
+          <p className="text-lg sm:text-xl md:text-2xl opacity-90 mb-6 md:mb-8 max-w-xl">
+            Discover the heart of the Caucasus. Find and book the finest hotels and restaurants in Georgia, from the vibrant streets of Tbilisi to the serene mountains of Svaneti.
           </p>
-        </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full max-w-xs sm:max-w-md justify-center items-center mx-auto mb-6">
-          <Link
-            href="/hotels"
-            className="flex items-center justify-center gap-3 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-white/30 active:scale-95 transition-all w-full"
-          >
-            <Building2 className="w-6 h-6" />
-            <span>Hotels</span>
-          </Link>
-          <Link
-            href="/restaurants"
-            className="flex items-center justify-center gap-3 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-white/30 active:scale-95 transition-all w-full"
-          >
-            <Utensils className="w-6 h-6" />
-            <span>Restaurants</span>
-          </Link>
-        </div>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full max-w-md items-start mb-6">
+            <Link
+              href="/hotels"
+              className="flex items-center justify-center gap-3 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-white/30 active:scale-95 transition-all w-full sm:w-auto"
+            >
+              <Building2 className="w-6 h-6" />
+              <span>Hotels</span>
+            </Link>
+            <Link
+              href="/restaurants"
+              className="flex items-center justify-center gap-3 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-white/30 active:scale-95 transition-all w-full sm:w-auto"
+            >
+              <Utensils className="w-6 h-6" />
+              <span>Restaurants</span>
+            </Link>
+          </div>
         
-        <div className="w-full max-w-xs sm:max-w-md mx-auto mb-10">
-          <a
-            href="/GeorgiaStay.apk"
-            download
-            className="flex items-center justify-center gap-3 rounded-xl bg-primary/80 backdrop-blur-sm border border-primary px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-primary active:scale-95 transition-all w-full"
-            aria-label="Download the GeorgiaStay mobile app"
-          >
-            <Download className="w-6 h-6" />
-            <span>Download App</span>
-          </a>
-        </div>
-        
-        <div className="w-full max-w-4xl">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white text-center text-shadow-md">Popular Cities</h2>
-          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 justify-center items-center mx-auto">
-            {featuredCities.map((city) => {
-              const count = hardcodedHotels.filter(h => h.city === city.name).length;
-              return (
-                <Link
-                  href={city.link}
-                  key={city.name}
-                  className="block rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-white/50 transition-all w-full transition-transform duration-150 text-center overflow-hidden"
-                >
-                  <div className="h-24 sm:h-32 w-full overflow-hidden">
-                    <img src={city.image} alt={city.name} className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300" />
-                  </div>
-                  <div className="flex flex-col items-center gap-2 py-3">
-                    <MapPin className="w-6 h-6" />
-                    <span className="font-semibold text-lg">{city.name}</span>
-                    <span className="font-bold text-primary-foreground text-sm">{count} hotels</span>
-                  </div>
-                </Link>
-              );
-            })}
+          <div className="w-full max-w-md">
+            <a
+              href="https://github.com/Giogfr/hotelsingeorgia/releases/latest/download/GeorgiaStay.apk"
+              className="flex items-center justify-center gap-3 rounded-xl bg-primary/80 backdrop-blur-sm border border-primary px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-primary active:scale-95 transition-all w-full sm:w-auto"
+              aria-label="Download the GeorgiaStay mobile app"
+            >
+              <Download className="w-6 h-6" />
+              <span>Download App</span>
+            </a>
           </div>
         </div>
+
+        {/* Right Column - Image Gallery */}
+        <div className="hidden md:grid grid-cols-2 gap-4">
+          {galleryImages.map((src, index) => (
+            <div key={index} className="rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
+              <img src={src} alt={`Georgia Gallery Image ${index + 1}`} className="w-full h-full object-cover" />
+            </div>
+          ))}
+        </div>
       </div>
+
       <a
         href="https://trip.com"
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute bottom-4 right-4 text-white text-xs opacity-70 hover:opacity-100 transition-opacity"
+        className="absolute bottom-4 right-4 text-white text-xs opacity-70 hover:opacity-100 transition-opacity z-20"
       >
         Book hotels via Trip.com
       </a>
