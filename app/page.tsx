@@ -82,7 +82,7 @@ export default function LandingPage() {
       {/* Background Image and Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/georgia-background.jpg')" }}
+        style={{ backgroundImage: "url('/georgia-background.png')" }}
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
       </div>

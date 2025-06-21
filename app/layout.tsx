@@ -7,7 +7,6 @@ import Script from "next/script"
 import ClickSpark from "./ClickSpark"
 import PageTransition from "@/components/PageTransition"
 import GlobalLoader from "@/components/GlobalLoader"
-import Image from "next/image"
 import MouseFollower from "@/components/mouse-follower"
 
 const inter = Inter({ subsets: ["latin"] })

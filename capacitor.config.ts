@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.georgia.hotels',
+  appId: 'com.georgia.stay',
   appName: 'GeorgiaStay',
   webDir: 'out',
   server: {
