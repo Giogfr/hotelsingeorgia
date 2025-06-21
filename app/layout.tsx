@@ -7,6 +7,7 @@ import Script from "next/script"
 import ClickSpark from "./ClickSpark"
 import PageTransition from "@/components/PageTransition"
 import GlobalLoader from "@/components/GlobalLoader"
+import MouseFollower from "@/components/mouse-follower"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -45,6 +46,7 @@ export default function RootLayout({
         }} />
       </head>
       <body className={inter.className}>
+        <MouseFollower />
         {/* Full-screen mountain skiing background image for the entire app */}
         <div className="fixed inset-0 w-full h-full z-0 pointer-events-none select-none overflow-hidden">
           <img
