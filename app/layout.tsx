@@ -7,7 +7,6 @@ import Script from "next/script"
 import ClickSpark from "./ClickSpark"
 import PageTransition from "@/components/PageTransition"
 import GlobalLoader from "@/components/GlobalLoader"
-import Image from "next/image"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -26,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/georgia_flag.svg" type="image/svg+xml" />
         <Script
           id="adsense-script"
           async
