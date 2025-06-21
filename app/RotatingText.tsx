@@ -10,8 +10,6 @@ import {
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import "./RotatingText.css";
-
 // Utility for className merging with type safety
 function cn(...classes: (string | undefined | null | false)[]): string {
   return classes.filter(Boolean).join(" ");

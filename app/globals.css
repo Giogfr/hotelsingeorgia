@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 222.2 84% 4.9%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -50,7 +50,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 262.1 83.3% 57.8%;
+    --ring: 212.7 26.8% 83.9%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -65,6 +65,20 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-image: radial-gradient(circle at top left, hsl(var(--primary) / 0.1), transparent 30%),
+                      radial-gradient(circle at bottom right, hsl(var(--accent) / 0.1), transparent 30%);
+  }
+
+  body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(8px);
+    z-index: -1;
   }
 }
 
@@ -207,4 +221,35 @@ html {
     font-size: 1.2rem;
     padding: 0 2vw;
   }
+}
+
+.text-rotate {
+  display: inline-block;
+  position: relative;
+  font-weight: bold;
+}
+.text-rotate-word {
+  display: inline-block;
+  white-space: pre;
+}
+.text-rotate-element {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+.text-rotate-space {
+  display: inline-block;
+  width: 0.4em;
+}
+.text-rotate-lines {
+  display: block;
+}
+.text-rotate-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
 }

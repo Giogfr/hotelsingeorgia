@@ -10,7 +10,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Separator } from "@/components/ui/separator"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { FloatingActionButton } from "@/components/floating-action-button"
 import { UserNav } from "@/components/auth/user-nav"
 import {
   Search,
@@ -27,11 +26,19 @@ import {
   Mountain,
   Users,
   ArrowLeft,
+  Frown,
+  Lightbulb,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useTranslation, type Language } from "@/lib/translations"
 import RestaurantsLoading from './loading'
+import { motion } from "framer-motion"
+
+export async function generateStaticParams() {
+  const languages = ['en', 'es', 'sr', 'ru', 'ka'];
+  return languages.map(lang => ({ lang }));
+}
 
 // Placeholder restaurant data
 const hardcodedRestaurants: Array<{
@@ -176,7 +183,7 @@ const restaurantFunFacts = [
 export default function RestaurantsPage() {
   const [delayDone, setDelayDone] = useState(false)
   const [selectedCity, setSelectedCity] = useState("")
-  const [selectedRegion, setSelectedRegion] = useState("")
+  const [selectedRegion, setSelectedRegion] = useState("all")
   const [selectedType, setSelectedType] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedLanguage, setSelectedLanguage] = useState<Language>("en")
@@ -275,6 +282,11 @@ export default function RestaurantsPage() {
       )
     ).sort()
   ), []);
+
+  const regions = useMemo(() => {
+    const allRegions = hardcodedRestaurants.map(r => r.region);
+    return ["all", ...Array.from(new Set(allRegions))];
+  }, []);
 
   if (!delayDone) return <RestaurantsLoading />;
 
@@ -384,9 +396,8 @@ export default function RestaurantsPage() {
                       <SelectValue placeholder="All Regions" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All Regions</SelectItem>
-                      {georgianRegions.map((region) => (
-                        <SelectItem key={region} value={region}>{region}</SelectItem>
+                      {regions.map((region) => (
+                        <SelectItem key={region} value={region}>{region === 'all' ? 'All Regions' : region}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -420,9 +431,8 @@ export default function RestaurantsPage() {
                       <SelectValue placeholder="All Regions" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All Regions</SelectItem>
-                      {georgianRegions.map((region) => (
-                        <SelectItem key={region} value={region}>{region}</SelectItem>
+                      {regions.map((region) => (
+                        <SelectItem key={region} value={region}>{region === 'all' ? 'All Regions' : region}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -480,70 +490,37 @@ export default function RestaurantsPage() {
             <div className="space-y-6">
               {mounted ? (
                 sortedRestaurants.length > 0 ? (
-                  sortedRestaurants.map((restaurant, index) => (
-                    <Card
-                      key={restaurant.id}
-                      className={
-                        `hover:shadow-lg transition-all duration-300 hover:scale-[1.02] group border border-muted bg-card/80 ` +
-                        `animate-in fade-in slide-in-from-bottom-4 duration-700 delay-[${index * 60}ms]`
-                      }
-                    >
-                      <div className="md:col-span-2 p-6">
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <h3 className="text-xl font-semibold mb-1 group-hover:text-primary transition-colors">{restaurant.name}</h3>
-                            <div className="flex items-center text-muted-foreground mb-2">
-                              <MapPin className="h-4 w-4 mr-1" />
+                  <motion.div 
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {sortedRestaurants.map((restaurant, index) => (
+                      <motion.div
+                        key={restaurant.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.05 }}
+                      >
+                        <Card className="overflow-hidden group h-full flex flex-col">
+                          <div className="p-4 flex flex-col flex-grow">
+                            <h3 className="text-lg font-bold mb-2 flex-grow">{restaurant.name}</h3>
+                            <div className="flex items-center text-sm text-muted-foreground mb-4">
+                              <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
                               <span>{restaurant.city}, {restaurant.region}</span>
                             </div>
+                            <Badge variant="outline">{restaurant.type}</Badge>
                           </div>
-                        </div>
-                        <div className="mb-4">
-                          <a
-                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurant.name + ', ' + restaurant.city)}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Button variant="outline" className="w-full mb-2">View on Google Maps</Button>
-                          </a>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="hover:bg-primary hover:text-primary-foreground"
-                            onClick={async () => {
-                              if (navigator.share) {
-                                try {
-                                  await navigator.share({
-                                    title: restaurant.name,
-                                    text: `${restaurant.city}, ${restaurant.region}`,
-                                    url: `${window.location.origin}/restaurants/${restaurant.id}`,
-                                  })
-                                } catch (err) {
-                                  console.log("Error sharing:", err)
-                                }
-                              } else {
-                                navigator.clipboard.writeText(`${window.location.origin}/restaurants/${restaurant.id}`)
-                                alert("Restaurant link copied to clipboard!")
-                              }
-                            }}
-                          >
-                            <Share2 className="h-4 w-4 mr-2" />
-                            {t("share")}
-                          </Button>
-                        </div>
-                      </div>
-                    </Card>
-                  ))
+                        </Card>
+                      </motion.div>
+                    ))}
+                  </motion.div>
                 ) : (
-                  <div className="text-center py-12">
-                    <Mountain className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-                    <h3 className="text-xl font-semibold mb-2">No restaurants found</h3>
-                    <p className="text-muted-foreground mb-4">Try adjusting your filters or search.</p>
-                    <Button onClick={clearFilters} variant="outline">
-                      Clear All Filters
-                    </Button>
+                  <div className="text-center py-20">
+                    <Frown className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
+                    <h2 className="text-2xl font-bold mb-2">No Restaurants Found</h2>
+                    <p className="text-muted-foreground">Try adjusting your search query or filters.</p>
                   </div>
                 )
               ) : (
@@ -634,7 +611,6 @@ export default function RestaurantsPage() {
           </div>
         </div>
       </footer>
-      <FloatingActionButton />
       {showBackToTop && (
         <Button
           className="fixed bottom-8 right-8 z-50 animate-in fade-in bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg"

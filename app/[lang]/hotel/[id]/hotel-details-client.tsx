@@ -24,44 +24,18 @@ import {
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { GooglePlacesService } from "@/lib/google-places"
-import { hardcodedHotels } from "@/lib/hardcoded-hotels"
 
-export default function HotelDetailsPage({ params }: { params: { id: string } }) {
+export default function HotelDetailsClient({ hotel: initialHotel }: { hotel: any }) {
   const router = useRouter()
-  const [hotel, setHotel] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
+  const [hotel, setHotel] = useState<any>(initialHotel)
   const [isFavorite, setIsFavorite] = useState(false)
 
   useEffect(() => {
-    const fetchHotel = async () => {
-      setLoading(true)
-      setError("")
-      try {
-        const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_PLACES_API_KEY || ""
-        const service = new GooglePlacesService(apiKey)
-        const data = await service.getHotelDetails(params.id)
-        setHotel(data)
-      } catch (err) {
-        setError("Failed to load hotel details.")
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchHotel()
-  }, [params.id])
-
-  useEffect(() => {
     if (!hotel) {
+      // Redirect to home if no hotel data is provided, which can happen if the ID is invalid client-side
       router.replace("/")
     }
   }, [hotel, router])
-
-  const handleBookNow = async () => {
-    // Simulate booking process
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-  }
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -98,8 +72,7 @@ export default function HotelDetailsPage({ params }: { params: { id: string } })
     }
   }
 
-  if (loading) return <div className="p-8 text-center">Loading...</div>
-  if (error || !hotel) return null
+  if (!hotel) return null
 
   return (
     <div className="min-h-screen bg-background">
@@ -141,4 +114,4 @@ export default function HotelDetailsPage({ params }: { params: { id: string } })
       </div>
     </div>
   )
-}
+} 

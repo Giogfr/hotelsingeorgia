@@ -55,20 +55,12 @@ jobs:
       - name: Rename APK
         run: mv android/app/build/outputs/apk/debug/app-debug.apk GeorgiaStay.apk
 
-      - name: Create Release and Upload APK
-        uses: softprops/action-gh-release@v2
+      - name: Release APK
+        uses: ncipollo/release-action@v1
         with:
-          files: GeorgiaStay.apk
-          tag_name: latest # This will always update the 'latest' release
-          name: Latest Build
-          body: "Latest release of the GeorgiaStay app."
-          prerelease: false
-          draft: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload APK as artifact (for internal use)
-        uses: actions/upload-artifact@v4
-        with:
-          name: GeorgiaStay-apk
-          path: GeorgiaStay.apk 
+          artifacts: "GeorgiaStay.apk"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: build-${{ github.run_number }}
+          name: Build ${{ github.run_number }}
+          body: "Automated build of the GeorgiaStay Android app."
+          allowUpdates: true 
