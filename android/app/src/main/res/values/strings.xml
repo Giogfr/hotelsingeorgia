@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Georgia Hotels</string>
+    <string name="title_activity_main">Georgia Hotels</string>
+    <string name="package_name">com.georgia.hotels</string>
+    <string name="custom_url_scheme">com.georgia.hotels</string>
+</resources>
