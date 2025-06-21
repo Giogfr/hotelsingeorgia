@@ -50,8 +50,20 @@ jobs:
       - name: Build debug APK
         run: ./android/gradlew -p android assembleDebug
 
+      - name: Rename APK
+        run: mv android/app/build/outputs/apk/debug/app-debug.apk public/GeorgiaStay.apk
+
+      - name: Commit APK to repository
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "build: Add/update GeorgiaStay.apk"
+          file_pattern: public/GeorgiaStay.apk
+          commit_user_name: GeorgiaStay Builder
+          commit_user_email: bot@georgiastay.com
+          commit_author: GeorgiaStay Builder <bot@georgiastay.com>
+          
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk 
+          name: GeorgiaStay-apk
+          path: public/GeorgiaStay.apk 
