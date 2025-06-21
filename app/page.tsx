@@ -152,6 +152,14 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
+      <a
+        href="https://trip.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute bottom-4 right-4 text-white text-xs opacity-70 hover:opacity-100 transition-opacity"
+      >
+        Powered by Trip.com
+      </a>
     </div>
   );
 }
