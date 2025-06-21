@@ -55,15 +55,14 @@ jobs:
       - name: Rename APK
         run: mv android/app/build/outputs/apk/debug/app-debug.apk public/GeorgiaStay.apk
 
-      - name: Commit APK to repository
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "build: Add/update GeorgiaStay.apk"
-          file_pattern: public/GeorgiaStay.apk
-          commit_user_name: GeorgiaStay Builder
-          commit_user_email: bot@georgiastay.com
-          commit_author: GeorgiaStay Builder <bot@georgiastay.com>
-          
+      - name: Commit APK
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add public/GeorgiaStay.apk
+          git commit -m "build: Add/update GeorgiaStay.apk" || echo "No changes to commit"
+          git push
+
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:

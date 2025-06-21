@@ -158,7 +158,7 @@ export default function LandingPage() {
         rel="noopener noreferrer"
         className="absolute bottom-4 right-4 text-white text-xs opacity-70 hover:opacity-100 transition-opacity"
       >
-        Powered by Trip.com
+        Book hotels via Trip.com
       </a>
     </div>
   );
