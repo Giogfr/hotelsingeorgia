@@ -49,4 +49,4 @@ export async function fetchAmadeusHotels(city: string = 'Tbilisi'): Promise<Amad
     lng: hotel.geoCode?.longitude,
     ...hotel,
   }))
-} 
+}   

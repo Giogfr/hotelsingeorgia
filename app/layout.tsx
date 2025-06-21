@@ -48,7 +48,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <BlobCursor />
         {/* Full-screen mountain skiing background image for the entire app */}
-        <div className="fixed inset-0 w-full h-full z-0 pointer-events-none select-none overflow-hidden">
+        <div className="fixed inset-0 w-full h-full z-[-10] pointer-events-none select-none overflow-hidden">
           <img
             src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80"
             alt="Tbilisi background"

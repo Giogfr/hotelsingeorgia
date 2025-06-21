@@ -25,4 +25,19 @@
 
 .inner-dot {
   position: absolute;
+}
+
+.blob-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  width: 200px; /* Adjust size as needed */
+  height: 200px; /* Adjust size as needed */
+  background: radial-gradient(circle, rgba(13, 110, 253, 0.2), transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(50px); /* Adjust blur amount as needed */
+  z-index: -5; /* Place it behind most content but above the background */
+  transition: transform 0.1s ease-out;
 } 
