@@ -37,6 +37,7 @@ import {
   Clock,
   ChevronDown,
   Building2,
+  Download,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -77,104 +78,78 @@ export default function LandingPage() {
   useEffect(() => { setMounted(true); }, []);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center" style={{ minHeight: '100vh' }}>
-      <div className="background-georgia-blur pointer-events-none select-none">
-        Nestled at the crossroads of Europe and Asia, Georgia is a land of stunning natural beauty, rich traditions, and ancient history. From the towering peaks of the Caucasus Mountains to the sun-soaked beaches of the Black Sea coast, Georgia's diverse landscapes are as breathtaking as they are unique. Its capital, Tbilisi, is a vibrant mix of old and new—historic architecture, cobblestone streets, and sulfur baths stand side by side with modern cafes and art galleries.
-        Georgia is one of the world's oldest wine-producing regions, with a winemaking tradition that dates back over 8,000 years. The country is known for its warm hospitality—visitors are treated like family, and meals are shared with generous amounts of food, laughter, and heartfelt toasts. Georgian cuisine is famous for its bold flavors, rich spices, and iconic dishes like khachapuri, khinkali, and lobio.
-        The Georgian language, with its unique script, is a symbol of the nation's identity and resilience. Georgia has a deep cultural heritage, filled with folklore, music, dance, and religious traditions. Ancient churches dot the countryside, and UNESCO World Heritage Sites like Mtskheta and the Gelati Monastery tell the story of Georgia's spiritual journey.
-        Despite its small size, Georgia offers a rich mosaic of experiences: ski resorts in Gudauri, wine tours in Kakheti, ancient cave cities like Uplistsikhe, and subtropical forests in Samegrelo. It is a country where past and present coexist beautifully—a timeless place where every traveler can find a piece of inspiration, adventure, and heartfelt connection.
+    <div className="relative min-h-screen w-full">
+      {/* Background Image and Overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/georgia-background.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-black opacity-50"></div>
       </div>
-      <div className="text-center mb-8 md:mb-12 mt-40">
-        {mounted ? (
-          <RotatingText
-            texts={["Welcome to GeorgiaStay", "Book Hotels", "Find Restaurants", "Discover Georgia"]}
-            mainClassName="font-bold text-lg sm:text-xl md:text-2xl inline-block mb-2"
-            staggerFrom={"last"}
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -20, opacity: 0 }}
-            staggerDuration={0.025}
-            splitLevelClassName=""
-            transition={{ type: "tween", duration: 0.6, ease: "easeInOut" }}
-            rotationInterval={2000}
-            loop={true}
-            auto={true}
-          />
-        ) : (
-          <span className="font-bold text-lg sm:text-xl md:text-2xl inline-block mb-2">
-            Welcome to GeorgiaStay
-          </span>
-        )}
-        <p className="text-lg sm:text-xl md:text-2xl opacity-90 mb-4 md:mb-8">
-          <span className="animated-underline">What are you looking for?</span>
-        </p>
-      </div>
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 w-full max-w-xs sm:max-w-xl justify-center items-center mx-auto mb-4">
-        <StarBorder as="div" color="#a78bfa" speed="1.5s" thickness={0} className="w-full sm:w-auto mb-2">
+      
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-4 text-white">
+        <div className="text-center mb-8 md:mb-12 mt-20">
+          <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl mb-4 text-shadow-lg">
+            GeorgiaStay
+          </h1>
+          <p className="text-lg sm:text-xl md:text-2xl opacity-90 mb-4 md:mb-8">
+            What are you looking for?
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full max-w-xs sm:max-w-md justify-center items-center mx-auto mb-6">
           <Link
             href="/hotels"
-            className="block rounded-xl border border-muted bg-card px-3 py-2 sm:px-8 sm:py-6 text-sm sm:text-xl font-semibold text-foreground shadow-md hover:shadow-xl active:scale-95 hover:border-primary transition-all min-w-[90px] sm:min-w-[180px] transition-transform duration-150 text-center w-full sm:w-auto"
+            className="flex items-center justify-center gap-3 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-white/30 active:scale-95 transition-all w-full"
           >
-            <span className="flex items-center justify-center gap-1 sm:gap-3">
-              <Building2 className="w-4 h-4 sm:w-6 sm:h-6 text-muted-foreground" />
-              <span>Hotels</span>
-            </span>
+            <Building2 className="w-6 h-6" />
+            <span>Hotels</span>
           </Link>
-        </StarBorder>
-        <StarBorder as="div" color="#a78bfa" speed="1.5s" thickness={0} className="w-full sm:w-auto mb-2">
           <Link
             href="/restaurants"
-            className="block rounded-xl border border-muted bg-card px-3 py-2 sm:px-8 sm:py-6 text-sm sm:text-xl font-semibold text-foreground shadow-md hover:shadow-xl active:scale-95 hover:border-primary transition-all min-w-[90px] sm:min-w-[180px] transition-transform duration-150 text-center w-full sm:w-auto"
+            className="flex items-center justify-center gap-3 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-white/30 active:scale-95 transition-all w-full"
           >
-            <span className="flex items-center justify-center gap-1 sm:gap-3">
-              <Utensils className="w-4 h-4 sm:w-6 sm:h-6 text-muted-foreground" />
-              <span>Restaurants</span>
-            </span>
+            <Utensils className="w-6 h-6" />
+            <span>Restaurants</span>
           </Link>
-        </StarBorder>
-      </div>
-      <div className="about-georgia-animate max-w-2xl mx-auto mb-8 text-center text-base sm:text-lg md:text-xl text-muted-foreground font-medium">
-        Georgia is a country at the crossroads of Europe and Asia, known for its stunning Caucasus mountains, ancient wine tradition, and vibrant hospitality.
-      </div>
-      <div className="flex justify-center mt-6 mb-4 w-full max-w-xs sm:max-w-xl mx-auto">
-        <StarBorder as="div" color="#a78bfa" speed="1.5s" thickness={0} className="w-full sm:w-auto mb-2">
+        </div>
+        
+        <div className="w-full max-w-xs sm:max-w-md mx-auto mb-10">
           <a
-            href="https://tp.media/r?marker=641673&trs=427893&p=8626&u=https%3A%2F%2Ftrip.com&campaign_id=121"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block rounded-xl border border-muted bg-card px-3 py-2 sm:px-8 sm:py-6 text-sm sm:text-xl font-semibold text-foreground shadow-md hover:shadow-xl active:scale-95 hover:border-primary transition-all min-w-[90px] sm:min-w-[180px] transition-transform duration-150 text-center w-full sm:w-auto"
-            aria-label="Book hotels in Georgia and worldwide on Trip.com (affiliate link)"
+            href="/GeorgiaStay.apk"
+            download
+            className="flex items-center justify-center gap-3 rounded-xl bg-primary/80 backdrop-blur-sm border border-primary px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-primary active:scale-95 transition-all w-full"
+            aria-label="Download the GeorgiaStay mobile app"
           >
-            <span className="flex items-center justify-center gap-1 sm:gap-3">
-              <Building2 className="w-4 h-4 sm:w-6 sm:h-6 text-muted-foreground" />
-              <span>Book hotels worldwide on Trip.com</span>
-            </span>
+            <Download className="w-6 h-6" />
+            <span>Download App</span>
           </a>
-        </StarBorder>
-      </div>
-      <div className="mt-10 sm:mt-16 w-full max-w-3xl">
-        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-primary text-center">Popular Cities</h2>
-        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 justify-center items-center mx-auto">
-          {featuredCities.map((city) => {
-            const count = hardcodedHotels.filter(h => h.city === city.name).length;
-            return (
-              <StarBorder as="div" className="h-full star-border-thick" key={city.name}>
+        </div>
+        
+        <div className="w-full max-w-4xl">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white text-center text-shadow-md">Popular Cities</h2>
+          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 justify-center items-center mx-auto">
+            {featuredCities.map((city) => {
+              const count = hardcodedHotels.filter(h => h.city === city.name).length;
+              return (
                 <Link
                   href={city.link}
-                  className="block rounded-xl border border-muted bg-card shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-primary transition-all min-w-[100px] sm:min-w-[180px] max-w-xs w-full transition-transform duration-150 text-center overflow-hidden p-0 h-full"
+                  key={city.name}
+                  className="block rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-md hover:shadow-xl hover:scale-105 active:scale-95 hover:border-white/50 transition-all w-full transition-transform duration-150 text-center overflow-hidden"
                 >
-                  <div className="h-20 xs:h-24 sm:h-40 w-full overflow-hidden">
+                  <div className="h-24 sm:h-32 w-full overflow-hidden">
                     <img src={city.image} alt={city.name} className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300" />
                   </div>
-                  <div className="flex flex-col items-center gap-1 xs:gap-2 sm:gap-3 py-2 xs:py-3 sm:py-6">
-                    <MapPin className="w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 text-muted-foreground" />
-                    <span className="font-semibold text-sm xs:text-base sm:text-lg">{city.name}</span>
-                    <span className="font-bold text-primary text-xs xs:text-sm sm:text-base">{count} hotels</span>
+                  <div className="flex flex-col items-center gap-2 py-3">
+                    <MapPin className="w-6 h-6" />
+                    <span className="font-semibold text-lg">{city.name}</span>
+                    <span className="font-bold text-primary-foreground text-sm">{count} hotels</span>
                   </div>
                 </Link>
-              </StarBorder>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
