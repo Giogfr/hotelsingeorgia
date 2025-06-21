@@ -12,10 +12,9 @@ import Image from "next/image"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "GeorgiaStay - Discover Beautiful Hotels in Georgia",
-  description:
-    "Find and book the perfect hotel for your Georgian adventure. From Tbilisi to Batumi, discover the best accommodations in Georgia.",
-  keywords: "Georgia hotels, Tbilisi hotels, Batumi hotels, Georgian accommodation, hotel booking",
+  title: "GeorgiaStay",
+  description: "Find and book hotels and restaurants in Georgia.",
+  keywords: "Georgia, hotels, restaurants, booking, travel, Tbilisi, Batumi",
     generator: 'v0.dev'
 }
 
