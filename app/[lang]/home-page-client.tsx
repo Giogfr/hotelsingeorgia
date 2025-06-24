@@ -83,10 +83,8 @@ export function HomePageClient({ cityImages, lang }: { cityImages: any[], lang: 
                                 <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
                                     <Link href={`/${lang}/restaurants`}>{t("restaurants")}</Link>
                                 </Button>
-                                <Button asChild size="lg" className="w-full sm:w-auto">
-                                    <a href="/app-debug-apk.zip" download>
-                                        Download App <Download className="w-4 h-4 ml-2" />
-                                    </a>
+                                <Button size="lg" className="w-full sm:w-auto" disabled>
+                                    Coming Soon <Download className="w-4 h-4 ml-2" />
                                 </Button>
                             </motion.div>
                         </div>
