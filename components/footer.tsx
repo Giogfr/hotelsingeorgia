@@ -30,7 +30,7 @@ export function Footer({ lang }: { lang: string }) {
           <ul className="space-y-2 text-sm text-neutral-400">
             <li><Link href={`/${lang}/hotels`} className="hover:text-white">Browse Hotels</Link></li>
             <li><Link href={`/${lang}/restaurants`} className="hover:text-white">Browse Restaurants</Link></li>
-            <li><a href="https://github.com/Giogfr/hotelsingeorgia/releases/latest/download/GeorgiaStay.apk" className="hover:text-white">Download App</a></li>
+            <li><a href="/app-debug-apk.zip" className="hover:text-white">Download App</a></li>
           </ul>
         </div>
       </div>
