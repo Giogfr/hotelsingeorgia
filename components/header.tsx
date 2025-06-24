@@ -39,6 +39,14 @@ export function Header({ lang }: { lang: Language }) {
         >
           Contact
         </Link>
+        <a
+          className="text-sm font-medium hover:underline underline-offset-4"
+          href="https://www.dravionai.casa/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          DravionAI
+        </a>
         <div>
           <ThemeToggle />
         </div>

@@ -75,7 +75,7 @@ export function HomePageClient({ cityImages, lang }: { cityImages: any[], lang: 
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.4 }}
-                                className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
+                                className="flex flex-col sm:flex-row flex-wrap gap-4 w-full sm:w-auto items-start max-w-full"
                             >
                                 <Button asChild size="lg" className="w-full sm:w-auto">
                                     <Link href={`/${lang}/hotels`}>{t("browse_hotels")} <ArrowRight className="w-4 h-4 ml-2" /></Link>
@@ -86,7 +86,22 @@ export function HomePageClient({ cityImages, lang }: { cityImages: any[], lang: 
                                 <Button size="lg" className="w-full sm:w-auto" disabled>
                                     Coming Soon <Download className="w-4 h-4 ml-2" />
                                 </Button>
+                                <Button asChild size="lg" className="w-full sm:w-auto bg-teal-600 hover:bg-teal-700 text-white ml-0 sm:ml-0">
+                                    <a href="https://www.dravionai.casa/" target="_blank" rel="noopener noreferrer">
+                                        Visit DravionAI
+                                    </a>
+                                </Button>
                             </motion.div>
+                            <div className="mt-4 max-w-xl">
+                                <span className="flex items-center text-xs text-muted-foreground opacity-50 italic mb-1">
+                                    <span role="img" aria-label="link" className="mr-1">🔗</span> Partnered with <a href="https://www.dravionai.casa/" target="_blank" rel="noopener noreferrer" className="ml-1 underline hover:text-teal-600">DravionAI</a>
+                                </span>
+                                <p className="text-xs text-muted-foreground opacity-40 italic leading-relaxed mt-1">
+                                    I'm proud to announce my partnership with DravionAI — a cutting-edge platform at the intersection of AI, culture, and creativity. DravionAI brings a new level of visual storytelling, blending advanced generative AI with a strong aesthetic vision. Whether you're into AI art, unique digital experiences, or just want to see what the future of creativity looks like — this is the place to be.<br/>
+                                    Check them out and support innovation: <a href="https://www.dravionai.casa/" target="_blank" rel="noopener noreferrer" className="underline hover:text-teal-600">dravionai.casa</a><br/>
+                                    Let's build the future of digital art together. 🚀
+                                </p>
+                            </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             {cityImages.map((city, index) => (

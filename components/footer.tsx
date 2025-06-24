@@ -33,6 +33,16 @@ export function Footer({ lang }: { lang: string }) {
             <li><span className="text-neutral-400 cursor-not-allowed">Coming Soon</span></li>
           </ul>
         </div>
+        <div>
+          <h3 className="font-bold mb-4">Partners</h3>
+          <ul className="space-y-2 text-sm text-neutral-400">
+            <li>
+              <a href="https://www.dravionai.casa/" target="_blank" rel="noopener noreferrer">
+                <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded w-full mt-2">Visit DravionAI</button>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="container max-w-7xl mt-8 text-center text-sm text-neutral-500">
         © {new Date().getFullYear()} GeorgiaStay. All rights reserved.
