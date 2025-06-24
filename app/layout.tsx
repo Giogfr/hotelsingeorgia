@@ -1,56 +1,79 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import ClickSpark from "@/app/ClickSpark"
-import BlobCursor from "@/components/BlobCursor"
-import { Toaster } from "@/components/ui/sonner"
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import FloatingDonateButton from "@/components/floating-action-button"
-import { cn } from "@/lib/utils"
-import { SocialFAB } from "@/components/social-fab"
+import { Inter as FontSans } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
+import { CurrencyProvider } from "@/contexts/currency-context";
+import "@/app/globals.css";
+import ClickSpark from "@/app/ClickSpark";
+import BlobCursor from "@/components/BlobCursor";
+import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import FloatingDonateButton from "@/components/floating-action-button";
+import { SocialFAB } from "@/components/social-fab";
 
-const inter = Inter({ subsets: ["latin"] })
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
-export const metadata: Metadata = {
-  title: "GeorgiaStay",
-  description: "Find your perfect stay in Georgia. Book hotels and restaurants.",
-  keywords: "Georgia, hotels, restaurants, booking, travel, Tbilisi, Batumi",
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/georgia_flag.svg" type="image/svg+xml" />
+        <title>GStay - Hotels & Restaurants in Georgia</title>
+        <meta name="description" content="Discover and book the best hotels and restaurants in Georgia. Fast, modern, and mobile-friendly." />
+        <meta property="og:title" content="GStay - Hotels & Restaurants in Georgia" />
+        <meta property="og:description" content="Discover and book the best hotels and restaurants in Georgia. Fast, modern, and mobile-friendly." />
+        <meta property="og:image" content="/logo.svg" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yourdomain.com" />
+        <link rel="icon" href="/logo.svg" />
+        <link rel="shortcut icon" href="/logo.svg" />
+        <link rel="apple-touch-icon" href="/logo.svg" />
       </head>
-      <body className={cn(
-        "min-h-screen bg-background font-sans antialiased",
-        inter.className
-      )}>
-        <ThemeProvider 
-          attribute="class" 
-          defaultTheme="system" 
-          enableSystem 
-          disableTransitionOnChange
-        >
-          <ClickSpark>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+        suppressHydrationWarning
+      >
+        <CurrencyProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ClickSpark>
               <BlobCursor />
-              {children}
-          </ClickSpark>
-          <SocialFAB />
-          <FloatingDonateButton />
-          <Analytics />
-          <SpeedInsights />
-          <Toaster />
-        </ThemeProvider>
+              <main className="flex-grow">{children}</main>
+            </ClickSpark>
+            <SocialFAB />
+            <FloatingDonateButton />
+            <Analytics />
+            <SpeedInsights />
+            <Toaster />
+          </ThemeProvider>
+        </CurrencyProvider>
       </body>
     </html>
-  )
+  );
 }
+
+export const metadata = {
+  title: 'GStay - Hotels & Restaurants in Georgia',
+  description: 'Discover and book the best hotels and restaurants in Georgia. Fast, modern, and mobile-friendly.',
+  openGraph: {
+    title: 'GStay - Hotels & Restaurants in Georgia',
+    description: 'Discover and book the best hotels and restaurants in Georgia. Fast, modern, and mobile-friendly.',
+    images: ['/logo.svg'],
+    type: 'website',
+    url: 'https://yourdomain.com',
+  },
+  icons: {
+    icon: '/logo.svg',
+    shortcut: '/logo.svg',
+    apple: '/logo.svg',
+  },
+}; 

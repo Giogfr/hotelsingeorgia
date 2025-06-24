@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import * as LucideIcons from "lucide-react"
 import { motion } from "framer-motion"
+import { Language } from "@/lib/translations"
 
 const Icon = ({ name, ...props }: { name: string, [key: string]: any }) => {
   const LucideIcon = (LucideIcons as any)[name];
@@ -12,7 +13,7 @@ const Icon = ({ name, ...props }: { name: string, [key: string]: any }) => {
   return <LucideIcon {...props} />;
 };
 
-export function AboutPageClient({ features, stats, t }: { features: any[], stats: any[], t: any }) {
+export function AboutPageClient({ features, stats, t, lang }: { features: any[], stats: any[], t: any, lang: Language }) {
     return (
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -29,7 +30,7 @@ export function AboutPageClient({ features, stats, t }: { features: any[], stats
               transition={{ duration: 0.6 }}
               className="text-4xl md:text-6xl font-bold mb-6 drop-shadow-lg"
             >
-              {t("aboutTitle")}
+              {t.aboutTitle}
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0 }}
@@ -37,7 +38,7 @@ export function AboutPageClient({ features, stats, t }: { features: any[], stats
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-xl md:text-2xl opacity-90 max-w-4xl mx-auto drop-shadow-md"
             >
-              {t("aboutDescription")}
+              {t.aboutDescription}
             </motion.p>
           </div>
         </section>
@@ -68,8 +69,8 @@ export function AboutPageClient({ features, stats, t }: { features: any[], stats
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">{t("ourMission")}</h2>
-                <p className="text-lg text-muted-foreground">{t("missionText")}</p>
+                <h2 className="text-3xl font-bold mb-4">{t.ourMission}</h2>
+                <p className="text-lg text-muted-foreground">{t.missionText}</p>
               </div>
   
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -103,7 +104,7 @@ export function AboutPageClient({ features, stats, t }: { features: any[], stats
         <section className="py-16 bg-muted/40">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold text-center mb-12">{t("whyChooseUs")}</h2>
+              <h2 className="text-3xl font-bold text-center mb-12">{t.whyChooseUs}</h2>
   
               <motion.div 
                 className="grid grid-cols-1 md:grid-cols-2 gap-8"

@@ -6,8 +6,48 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import RotatingText from "@/app/RotatingText"
 import { ArrowRight, Download, Hotel, Utensils, Star, MapPin } from "lucide-react"
+import { useHomeTranslation } from "@/lib/translations"
+import { useEffect, useState } from 'react';
 
-export function HomePageClient({ cityImages, faqItems }: { cityImages: any[], faqItems: any[] }) {
+export function HomePageClient({ cityImages, lang }: { cityImages: any[], lang: string }) {
+    const t = useHomeTranslation(lang as any);
+    const [deferredPrompt, setDeferredPrompt] = useState(null);
+    const [showInstall, setShowInstall] = useState(false);
+
+    useEffect(() => {
+        const handler = (e) => {
+            e.preventDefault();
+            setDeferredPrompt(e);
+            setShowInstall(true);
+        };
+        window.addEventListener('beforeinstallprompt', handler);
+        return () => window.removeEventListener('beforeinstallprompt', handler);
+    }, []);
+
+    const handleInstallClick = () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => setDeferredPrompt(null));
+        } else {
+            alert('To install the app, use your browser menu: Add to Home Screen.');
+        }
+    };
+
+    const faqItems = [
+        {
+            question: t("faq_q1"),
+            answer: t("faq_a1")
+        },
+        {
+            question: t("faq_q2"),
+            answer: t("faq_a2")
+        },
+        {
+            question: t("faq_q3"),
+            answer: t("faq_a3")
+        },
+    ]
+
     return (
         <div className="flex flex-col min-h-screen bg-background text-foreground">
             <main className="flex-1">
@@ -21,7 +61,7 @@ export function HomePageClient({ cityImages, faqItems }: { cityImages: any[], fa
                                 transition={{ duration: 0.5 }}
                                 className="text-4xl md:text-6xl font-bold mb-4 leading-tight"
                             >
-                                Discover Beautiful Georgia
+                                {t("discover_beautiful_georgia")}
                             </motion.h1>
                             <motion.p
                                 initial={{ opacity: 0, y: 20 }}
@@ -29,15 +69,7 @@ export function HomePageClient({ cityImages, faqItems }: { cityImages: any[], fa
                                 transition={{ duration: 0.5, delay: 0.2 }}
                                 className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg"
                             >
-                                <RotatingText
-                                    texts={[
-                                        "Find your perfect stay.",
-                                        "Discover amazing hotels.",
-                                        "Book your next adventure.",
-                                        "Explore the heart of the Caucasus.",
-                                    ]}
-                                    rotationInterval={2500}
-                                />
+                                {t("find_perfect_stay")}
                             </motion.p>
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
@@ -46,15 +78,13 @@ export function HomePageClient({ cityImages, faqItems }: { cityImages: any[], fa
                                 className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
                             >
                                 <Button asChild size="lg" className="w-full sm:w-auto">
-                                    <Link href="/hotels">Browse Hotels <ArrowRight className="w-4 h-4 ml-2" /></Link>
+                                    <Link href={`/${lang}/hotels`}>{t("browse_hotels")} <ArrowRight className="w-4 h-4 ml-2" /></Link>
                                 </Button>
                                 <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
-                                    <Link href="/restaurants">Restaurants</Link>
+                                    <Link href={`/${lang}/restaurants`}>{t("restaurants")}</Link>
                                 </Button>
-                                <Button asChild size="lg" variant="ghost" className="w-full sm:w-auto">
-                                    <a href="https://github.com/Giogfr/hotelsingeorgia/releases/latest/download/GeorgiaStay.apk">
-                                        Download App <Download className="w-4 h-4 ml-2" />
-                                    </a>
+                                <Button onClick={handleInstallClick} className="w-full sm:w-auto">
+                                    Download App <Download className="w-4 h-4 ml-2" />
                                 </Button>
                             </motion.div>
                         </div>
@@ -62,15 +92,13 @@ export function HomePageClient({ cityImages, faqItems }: { cityImages: any[], fa
                             {cityImages.map((city, index) => (
                                 <motion.div
                                     key={city.name}
-                                    className="relative rounded-lg overflow-hidden shadow-lg group h-64"
                                     initial={{ opacity: 0, scale: 0.8 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.5, delay: 0.2 * index }}
                                 >
-                                    <img src={city.img} alt={city.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                                    <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-4">
-                                        <h3 className="text-white font-bold text-lg">{city.name}</h3>
-                                        <p className="text-white/80 text-sm">{city.hotels} hotels</p>
+                                    <div className="bg-muted/50 rounded-lg p-6 h-full flex flex-col justify-center items-center text-center hover:bg-muted transition-colors">
+                                        <h3 className="text-xl font-bold mb-1">{city.name}</h3>
+                                        <p className="text-sm text-muted-foreground">{city.hotels} hotels</p>
                                     </div>
                                 </motion.div>
                             ))}
@@ -81,29 +109,29 @@ export function HomePageClient({ cityImages, faqItems }: { cityImages: any[], fa
                 {/* Features Section */}
                 <section className="bg-muted/40 py-16 md:py-24">
                     <div className="container mx-auto px-4 text-center">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose GeorgiaStay?</h2>
-                        <p className="text-muted-foreground max-w-2xl mx-auto mb-12">We provide the best tools to help you discover and book your perfect Georgian getaway.</p>
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4">{t("why_choose_us")}</h2>
+                        <p className="text-muted-foreground max-w-2xl mx-auto mb-12">{t("why_choose_us_description")}</p>
                         <div className="grid md:grid-cols-3 gap-8">
                             <div className="flex flex-col items-center">
                                 <div className="p-4 bg-primary/10 rounded-full mb-4">
                                     <Hotel className="w-8 h-8 text-primary" />
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">Curated Hotels</h3>
-                                <p className="text-muted-foreground">Hand-picked hotels in the most popular destinations.</p>
+                                <h3 className="text-xl font-bold mb-2">{t("curated_hotels")}</h3>
+                                <p className="text-muted-foreground">{t("curated_hotels_description")}</p>
                             </div>
                             <div className="flex flex-col items-center">
                                 <div className="p-4 bg-primary/10 rounded-full mb-4">
                                     <Utensils className="w-8 h-8 text-primary" />
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">Local Restaurants</h3>
-                                <p className="text-muted-foreground">Discover authentic Georgian cuisine and the best local eateries.</p>
+                                <h3 className="text-xl font-bold mb-2">{t("local_restaurants")}</h3>
+                                <p className="text-muted-foreground">{t("local_restaurants_description")}</p>
                             </div>
                             <div className="flex flex-col items-center">
                                 <div className="p-4 bg-primary/10 rounded-full mb-4">
                                     <MapPin className="w-8 h-8 text-primary" />
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">Explore Everywhere</h3>
-                                <p className="text-muted-foreground">From city centers to remote mountain villages, find your adventure.</p>
+                                <h3 className="text-xl font-bold mb-2">{t("explore_everywhere")}</h3>
+                                <p className="text-muted-foreground">{t("explore_everywhere_description")}</p>
                             </div>
                         </div>
                     </div>
@@ -111,7 +139,7 @@ export function HomePageClient({ cityImages, faqItems }: { cityImages: any[], fa
 
                 {/* FAQ Section */}
                 <section className="py-16 md:py-24 px-4 max-w-3xl mx-auto w-full">
-                    <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+                    <h2 className="text-3xl font-bold text-center mb-12">{t("faq")}</h2>
                     <Accordion type="single" collapsible className="w-full">
                         {faqItems.map((item, index) => (
                             <AccordionItem value={`item-${index + 1}`} key={index}>

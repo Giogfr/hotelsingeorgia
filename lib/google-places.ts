@@ -44,6 +44,7 @@ export const georgianCitiesWithCoords = [
   { name: "Tbilisi", lat: 41.7151, lng: 44.8271, region: "Tbilisi" },
   { name: "Batumi", lat: 41.6168, lng: 41.6367, region: "Adjara" },
   { name: "Kutaisi", lat: 42.2679, lng: 42.7064, region: "Imereti" },
+  { name: "Gudauri", lat: 42.4755, lng: 44.4858, region: "Mtskheta-Mtianeti" },
   { name: "Rustavi", lat: 41.5492, lng: 44.9939, region: "Kvemo Kartli" },
   { name: "Gori", lat: 41.9847, lng: 44.1086, region: "Shida Kartli" },
   { name: "Zugdidi", lat: 42.5088, lng: 41.8709, region: "Samegrelo-Zemo Svaneti" },
@@ -128,7 +129,7 @@ export class GooglePlacesService {
 
       return amenities
     }
-w
+
     return {
       id: googleHotel.place_id,
       name: googleHotel.name,

@@ -1,32 +1,29 @@
-import { hardcodedHotels } from "@/lib/hardcoded-hotels";
+import { hardcodedHotels, Hotel } from "@/lib/hardcoded-hotels";
 import HotelDetailsClient from "./hotel-details-client";
-import { notFound } from 'next/navigation';
+import { Language, locales } from "@/lib/translations";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-  const languages = ['en', 'es', 'sr', 'ru', 'ka'];
-  const params = languages.flatMap((lang) =>
-    hardcodedHotels.map((hotel) => ({
-      lang: lang,
-      id: hotel.id,
-    }))
-  );
+  const params = [];
+  for (const lang of locales) {
+    for (const hotel of hardcodedHotels) {
+      params.push({ lang, id: hotel.id });
+    }
+  }
   return params;
 }
 
-async function getHotel(id: string) {
-  const hotel = hardcodedHotels.find((hotel) => hotel.id === id);
-  if (!hotel) {
-    return null;
-  }
-  return hotel;
-}
-
-export default async function HotelDetailsPage({ params }: { params: { id: string, lang: string } }) {
-  const hotel = await getHotel(params.id);
+export default async function HotelDetailsPage({
+  params,
+}: {
+  params: Promise<{ id: string; lang: Language }>;
+}) {
+  const { id, lang } = await params;
+  const hotel = hardcodedHotels.find((h) => h.id === id);
 
   if (!hotel) {
     notFound();
   }
 
-  return <HotelDetailsClient hotel={hotel} />;
+  return <HotelDetailsClient hotel={hotel} lang={lang} />;
 }

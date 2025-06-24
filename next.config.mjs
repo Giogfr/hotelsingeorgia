@@ -7,9 +7,26 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "source.unsplash.com",
+      },
+    ],
   },
-  output: 'export',
-}
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/en",
+        permanent: true,
+      },
+    ];
+  },
+};
 
-export default nextConfig
+export default nextConfig;

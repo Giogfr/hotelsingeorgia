@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Mountain } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "./language-switcher";
+import { CurrencySwitcher } from "./currency-switcher";
 import { Language } from "@/lib/translations";
 
 export function Header({ lang }: { lang: Language }) {
@@ -38,8 +39,11 @@ export function Header({ lang }: { lang: Language }) {
         >
           Contact
         </Link>
-        <ThemeToggle />
+        <div>
+          <ThemeToggle />
+        </div>
         <LanguageSwitcher />
+        <CurrencySwitcher />
       </nav>
     </header>
   );

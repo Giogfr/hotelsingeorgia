@@ -8,8 +8,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Mail, Instagram, Send, MapPin } from "lucide-react"
 import { motion } from "framer-motion"
+import { Language } from "@/lib/translations"
 
-export function ContactPageClient({ t }: { t: any }) {
+export function ContactPageClient({ t, lang }: { t: any, lang: Language }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -41,8 +42,8 @@ export function ContactPageClient({ t }: { t: any }) {
     >
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">{t("contactTitle")}</h1>
-          <p className="text-xl text-muted-foreground">{t("contactSubtitle")}</p>
+          <h1 className="text-4xl font-bold mb-4">{t.contactTitle}</h1>
+          <p className="text-xl text-muted-foreground">{t.contactSubtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -57,7 +58,7 @@ export function ContactPageClient({ t }: { t: any }) {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Mail className="h-5 w-5" />
-                  {t("email")}
+                  {t.email}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -71,7 +72,7 @@ export function ContactPageClient({ t }: { t: any }) {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Instagram className="h-5 w-5" />
-                  {t("instagram")}
+                  {t.instagram}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -107,13 +108,13 @@ export function ContactPageClient({ t }: { t: any }) {
           >
             <Card>
               <CardHeader>
-                <CardTitle>{t("sendMessage")}</CardTitle>
+                <CardTitle>{t.sendMessage}</CardTitle>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">{t("yourName")}</label>
+                      <label className="text-sm font-medium">{t.yourName}</label>
                       <Input
                         name="name"
                         value={formData.name}
@@ -123,7 +124,7 @@ export function ContactPageClient({ t }: { t: any }) {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">{t("yourEmail")}</label>
+                      <label className="text-sm font-medium">{t.yourEmail}</label>
                       <Input
                         name="email"
                         type="email"
@@ -136,7 +137,7 @@ export function ContactPageClient({ t }: { t: any }) {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">{t("subject")}</label>
+                    <label className="text-sm font-medium">{t.subject}</label>
                     <Input
                       name="subject"
                       value={formData.subject}
@@ -147,20 +148,20 @@ export function ContactPageClient({ t }: { t: any }) {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">{t("message")}</label>
+                    <label className="text-sm font-medium">{t.message}</label>
                     <Textarea
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
                       required
                       rows={6}
-                      placeholder={t("messagePlaceholder")}
+                      placeholder={t.messagePlaceholder}
                     />
                   </div>
 
                   <Button type="submit" className="w-full">
                     <Send className="h-4 w-4 mr-2" />
-                    {t("sendMessage")}
+                    {t.sendMessage}
                   </Button>
                 </form>
               </CardContent>

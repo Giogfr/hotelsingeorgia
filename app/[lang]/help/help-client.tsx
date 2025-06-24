@@ -8,26 +8,27 @@ import { Input } from "@/components/ui/input"
 import { Search, HelpCircle, MessageCircle, Mail } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { Language } from "@/lib/translations"
 
-export function HelpPageClient({ t }: { t: any }) {
+export function HelpPageClient({ t, lang }: { t: any, lang: Language }) {
   const [searchQuery, setSearchQuery] = useState("")
 
   const faqData = [
     {
-      question: t("bookingFaq"),
-      answer: t("bookingAnswer"),
+      question: t.bookingFaq,
+      answer: t.bookingAnswer,
     },
     {
-      question: t("cancelFaq"),
-      answer: t("cancelAnswer"),
+      question: t.cancelFaq,
+      answer: t.cancelAnswer,
     },
     {
-      question: t("paymentFaq"),
-      answer: t("paymentAnswer"),
+      question: t.paymentFaq,
+      answer: t.paymentAnswer,
     },
     {
-      question: t("supportFaq"),
-      answer: t("supportAnswer"),
+      question: t.supportFaq,
+      answer: t.supportAnswer,
     },
     {
       question: "What documents do I need for hotel check-in in Georgia?",
@@ -66,8 +67,8 @@ export function HelpPageClient({ t }: { t: any }) {
     >
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">{t("helpTitle")}</h1>
-          <p className="text-xl text-muted-foreground">{t("helpSubtitle")}</p>
+          <h1 className="text-4xl font-bold mb-4">{t.helpTitle}</h1>
+          <p className="text-xl text-muted-foreground">{t.helpSubtitle}</p>
         </div>
 
         {/* Search */}
@@ -133,7 +134,7 @@ export function HelpPageClient({ t }: { t: any }) {
         {/* FAQ Section */}
         <Card>
           <CardHeader>
-            <CardTitle>{t("faqTitle")}</CardTitle>
+            <CardTitle>{t.faqTitle}</CardTitle>
           </CardHeader>
           <CardContent>
             <Accordion type="single" collapsible className="w-full">
@@ -164,7 +165,7 @@ export function HelpPageClient({ t }: { t: any }) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild>
-              <Link href="/contact">{t("contactUs")}</Link>
+              <Link href="/contact">{t.contactUs}</Link>
             </Button>
             <Button variant="outline" asChild>
               <a href="https://instagram.com/Tetri_101" target="_blank" rel="noopener noreferrer">

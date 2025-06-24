@@ -1,117 +1,93 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import {
-  Star,
-  MapPin,
-  Wifi,
-  Car,
-  Coffee,
-  Utensils,
-  Waves,
-  Mountain,
-  Heart,
-  Share2,
-  Calendar,
-  Users,
-  CheckCircle,
-  ArrowLeft,
-} from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { Hotel } from "@/lib/hardcoded-hotels";
+import { Language } from "@/lib/translations";
+import { useCurrency } from "@/contexts/currency-context";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Star } from "lucide-react";
 
-export default function HotelDetailsClient({ hotel: initialHotel }: { hotel: any }) {
-  const router = useRouter()
-  const [hotel, setHotel] = useState<any>(initialHotel)
-  const [isFavorite, setIsFavorite] = useState(false)
+export default function HotelDetailsClient({
+  hotel,
+  lang,
+}: {
+  hotel: Hotel;
+  lang: Language;
+}) {
+  const { currency } = useCurrency();
 
-  useEffect(() => {
-    if (!hotel) {
-      // Redirect to home if no hotel data is provided, which can happen if the ID is invalid client-side
-      router.replace("/")
-    }
-  }, [hotel, router])
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: hotel.name,
-          text: hotel.types?.join(", "),
-          url: window.location.href,
-        })
-      } catch (err) {
-        console.log("Error sharing:", err)
-      }
-    } else {
-      // Fallback: copy to clipboard
-      navigator.clipboard.writeText(window.location.href)
-      alert("Link copied to clipboard!")
-    }
-  }
-
-  const getAmenityIcon = (amenity: string) => {
-    switch (amenity.toLowerCase()) {
-      case "wifi":
-        return <Wifi className="w-4 h-4" />
-      case "parking":
-        return <Car className="w-4 h-4" />
-      case "restaurant":
-        return <Utensils className="w-4 h-4" />
-      case "spa":
-        return <Coffee className="w-4 h-4" />
-      case "pool":
-        return <Waves className="w-4 h-4" />
+  const getPrice = () => {
+    switch (currency) {
+      case "GEL":
+        return `₾${hotel.price_gel}`;
+      case "USD":
+        return `$${hotel.price_usd}`;
+      case "EUR":
+        return `€${hotel.price_eur}`;
+      case "RUB":
+        return `₽${hotel.price_rub}`;
       default:
-        return <Mountain className="w-4 h-4" />
+        return `₾${hotel.price_gel}`;
     }
-  }
-
-  if (!hotel) return null
+  };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-background/95 backdrop-blur sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <Mountain className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold text-primary">GeorgiaStay</span>
-            </Link>
-            <Button variant="outline" asChild>
-              <Link href="/">Back to Search</Link>
-            </Button>
+    <div className="container mx-auto px-4 py-8">
+      <Card className="max-w-4xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-4xl font-bold">{hotel.name}</CardTitle>
+          <CardDescription className="text-lg text-muted-foreground">
+            {hotel.city}, {hotel.region}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <div className="relative w-full h-96 mb-4 bg-secondary rounded-lg flex items-center justify-center">
+                <p className="text-2xl text-muted-foreground">{hotel.name}</p>
+              </div>
+              <div className="flex items-center space-x-1">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Star
+                    key={index}
+                    className={`w-6 h-6 ${
+                      index < hotel.stars
+                        ? "text-yellow-400 fill-yellow-400"
+                        : "text-gray-300"
+                    }`}
+                  />
+                ))}
+              </div>
+              <p className="text-muted-foreground mt-2">{hotel.address}</p>
+            </div>
+            <div className="flex flex-col justify-between">
+              <div>
+                <h3 className="text-2xl font-semibold mb-4">Booking</h3>
+                <p className="text-4xl font-bold mb-6">{getPrice()} <span className="text-lg font-normal text-muted-foreground">/ night</span></p>
+                {/* Hotel description */}
+                {hotel.description && (
+                  <p className="text-base text-muted-foreground mb-4">{hotel.description}</p>
+                )}
+              </div>
+              <Button
+                variant="outline"
+                className="w-full mt-4"
+                onClick={() => {
+                  // Remove 'Resort', 'Hotel', and 'Motel' from the hotel name
+                  const cleanedName = hotel.name.replace(/\b(Resort|Hotel|Motel)\b/gi, '').replace(/\s+/g, ' ').trim();
+                  const searchString = `${cleanedName} ${hotel.address} ${hotel.lat},${hotel.lng}`;
+                  window.open(
+                    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchString)}`,
+                    "_blank"
+                  );
+                }}
+              >
+                View on Google Maps
+              </Button>
+            </div>
           </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto bg-card rounded-lg shadow-lg p-8">
-                  <h1 className="text-3xl font-bold mb-2">{hotel.name}</h1>
-                  <div className="flex items-center text-muted-foreground mb-2">
-                    <MapPin className="h-4 w-4 mr-1" />
-            <span>{hotel.city}, {hotel.region}</span>
-          </div>
-          <div className="flex items-center mb-4">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className={`h-5 w-5 ${i < hotel.stars ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
-            ))}
-          </div>
-          <a
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.name + ', ' + hotel.city)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button variant="outline" className="w-full mb-2">View on Google Maps</Button>
-          </a>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
-  )
-} 
+  );
+}

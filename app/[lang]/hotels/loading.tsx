@@ -3,40 +3,42 @@ import { motion } from "framer-motion";
 
 export default function HotelsLoading() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background">
-      <motion.div
-        className="flex gap-2 mb-4"
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: { opacity: 0, y: 40 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { staggerChildren: 0.15, delayChildren: 0.2 }
-          }
-        }}
-      >
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background"
+    >
+      <div className="flex gap-2 mb-4">
         {[...Array(4)].map((_, i) => (
           <motion.div
             key={i}
             className="w-6 h-6 rounded-lg bg-primary"
-            variants={{
-              hidden: { scale: 0, opacity: 0 },
-              visible: { scale: 1, opacity: 1 }
+            animate={{
+              scale: [1, 1.2, 1, 1.2, 1],
+              rotate: [0, 90, 180, 270, 360],
+              borderRadius: ["20%", "50%", "20%", "50%", "20%"],
             }}
-            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+            transition={{
+              duration: 2,
+              ease: "easeInOut",
+              times: [0, 0.2, 0.5, 0.8, 1],
+              repeat: Infinity,
+              repeatDelay: 1,
+              delay: i * 0.2
+            }}
           />
         ))}
-      </motion.div>
+      </div>
       <motion.div
         className="text-xl font-bold text-primary"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
       >
-        Loading Hotels...
+        Loading available hotels...
       </motion.div>
-    </div>
+    </motion.div>
   );
 } 
