@@ -17,6 +17,7 @@ import { Language } from "@/lib/translations"
 import Image from "next/image"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useRouter } from "next/navigation"
 
 interface RestaurantsClientProps {
   restaurants: Restaurant[];
@@ -86,6 +87,7 @@ export function RestaurantsClient({ restaurants, t, lang }: RestaurantsClientPro
   const [search, setSearch] = useState("")
   const [sortOrder, setSortOrder] = useState("ratingDesc")
   const [selectedCuisine, setSelectedCuisine] = useState<string | null>(null)
+  const router = useRouter();
 
   // Dynamically calculate cuisine counts from the data
   const cuisineCounts = useMemo(() => {
@@ -124,6 +126,12 @@ export function RestaurantsClient({ restaurants, t, lang }: RestaurantsClientPro
     }
     return filtered;
   }, [search, restaurants, sortOrder, selectedCuisine]);
+
+  function handleRandomRestaurant() {
+    if (!restaurants.length) return;
+    const random = restaurants[Math.floor(Math.random() * restaurants.length)];
+    router.push(`/${lang}/restaurants?highlight=${random.id}`);
+  }
 
   return (
     <div className="bg-background text-foreground min-h-screen">
@@ -185,7 +193,7 @@ export function RestaurantsClient({ restaurants, t, lang }: RestaurantsClientPro
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-[180px]">
+            <div className="flex gap-2 items-center w-full sm:w-auto">
               <select
                 className="w-full border rounded px-3 py-2 bg-background text-foreground"
                 value={sortOrder}
@@ -196,6 +204,7 @@ export function RestaurantsClient({ restaurants, t, lang }: RestaurantsClientPro
                 <option value="name">{t.restaurants_page.sortByName}</option>
                 <option value="cuisine">{t.restaurants_page.sortByCuisine}</option>
               </select>
+              <Button onClick={handleRandomRestaurant} variant="outline" className="h-10">Random Restaurant</Button>
             </div>
           </div>
         </div>

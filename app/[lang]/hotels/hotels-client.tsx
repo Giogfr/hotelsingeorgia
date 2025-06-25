@@ -13,6 +13,7 @@ import Image from "next/image"
 import type { StaticImageData } from 'next/image';
 import { Currency } from "@/components/currency-switcher"
 import { Language, useHotelsTranslation } from "@/lib/translations"
+import { useRouter } from "next/navigation"
 
 interface Hotel {
   id: string;
@@ -42,8 +43,8 @@ export default function HotelsClient({ hotels, lang }: { hotels: Hotel[], lang: 
   const [searchQuery, setSearchQuery] = useState("")
   const [sortOrder, setSortOrder] = useState("rating")
   const { currency } = useCurrency();
-
   const t = useHotelsTranslation(lang);
+  const router = useRouter();
 
   const getPrice = (hotel: Hotel) => {
     let price = hotel[`price_${currency.toLowerCase()}` as keyof Hotel];
@@ -95,9 +96,18 @@ export default function HotelsClient({ hotels, lang }: { hotels: Hotel[], lang: 
     return sorted;
   }, [searchQuery, sortOrder, hotels]);
 
+  function handleRandomHotel() {
+    if (!hotels.length) return;
+    const random = hotels[Math.floor(Math.random() * hotels.length)];
+    router.push(`/${lang}/hotel/${random.id}`);
+  }
+
   return (
     <div className="bg-background text-foreground min-h-screen">
       <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-end mb-4">
+          <Button onClick={handleRandomHotel} variant="secondary">Random Hotel</Button>
+        </div>
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -187,19 +197,22 @@ export default function HotelsClient({ hotels, lang }: { hotels: Hotel[], lang: 
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <Select onValueChange={setSortOrder} defaultValue={sortOrder}>
-              <SelectTrigger className="w-full sm:w-[180px]">
-                <SelectValue placeholder={t('sortBy')} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="rating">{t('sortByRating')}</SelectItem>
-                <SelectItem value="name">{t('sortByName')}</SelectItem>
-                <SelectItem value="priceAsc">{t('sortByPriceAsc' as any)}</SelectItem>
-                <SelectItem value="priceDesc">{t('sortByPriceDesc' as any)}</SelectItem>
-                <SelectItem value="starsAsc">{t('sortByStarsAsc' as any)}</SelectItem>
-                <SelectItem value="starsDesc">{t('sortByStarsDesc' as any)}</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex gap-2 items-center">
+              <Select onValueChange={setSortOrder} defaultValue={sortOrder}>
+                <SelectTrigger className="w-full sm:w-[180px]">
+                  <SelectValue placeholder={t('sortBy')} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="rating">{t('sortByRating')}</SelectItem>
+                  <SelectItem value="name">{t('sortByName')}</SelectItem>
+                  <SelectItem value="priceAsc">{t('sortByPriceAsc' as any)}</SelectItem>
+                  <SelectItem value="priceDesc">{t('sortByPriceDesc' as any)}</SelectItem>
+                  <SelectItem value="starsAsc">{t('sortByStarsAsc' as any)}</SelectItem>
+                  <SelectItem value="starsDesc">{t('sortByStarsDesc' as any)}</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button onClick={handleRandomHotel} variant="outline" className="h-10">Random Hotel</Button>
+            </div>
           </div>
         </div>
 

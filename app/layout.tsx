@@ -30,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/logo.svg" />
         <link rel="shortcut icon" href="/logo.svg" />
         <link rel="apple-touch-icon" href="/logo.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
       </head>
       <body
         className={cn(
