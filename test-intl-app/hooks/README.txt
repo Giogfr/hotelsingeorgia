@@ -1,0 +1,1 @@
+This is the hooks folder. Copy all your custom hook files from the original project here. 

@@ -9,6 +9,7 @@ export const ka = {
   "region": "რეგიონი",
   "type": "ტიპი",
   "all": "ყველა",
+  "price_coming_soon": "ფასი: მალე დაემატება",
 
   // Home Page
   "discover_beautiful_georgia": "აღმოაჩინე ლამაზი საქართველო",

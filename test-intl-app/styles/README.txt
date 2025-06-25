@@ -1,0 +1,1 @@
+This is the styles folder. Copy all your style files from the original project here. 

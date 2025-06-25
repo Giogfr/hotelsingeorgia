@@ -1,0 +1,1 @@
+This is the contexts folder. Copy all your context files from the original project here. 

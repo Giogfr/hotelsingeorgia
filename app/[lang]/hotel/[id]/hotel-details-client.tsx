@@ -5,7 +5,9 @@ import { Language } from "@/lib/translations";
 import { useCurrency } from "@/contexts/currency-context";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Star } from "lucide-react";
+import { Star, Heart } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 export default function HotelDetailsClient({
   hotel,
@@ -15,20 +17,39 @@ export default function HotelDetailsClient({
   lang: Language;
 }) {
   const { currency } = useCurrency();
+  const [isLiked, setIsLiked] = useState(false);
+  const t = useTranslations('common');
+
+  // Check if hotel is in wishlist on mount
+  useEffect(() => {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    setIsLiked(wishlist.includes(hotel.id));
+  }, [hotel.id]);
+
+  const handleLike = () => {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    let updatedWishlist;
+    if (isLiked) {
+      updatedWishlist = wishlist.filter((id: string) => id !== hotel.id);
+    } else {
+      updatedWishlist = [...wishlist, hotel.id];
+    }
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+    setIsLiked(!isLiked);
+  };
 
   const getPrice = () => {
-    switch (currency) {
-      case "GEL":
-        return `₾${hotel.price_gel}`;
-      case "USD":
-        return `$${hotel.price_usd}`;
-      case "EUR":
-        return `€${hotel.price_eur}`;
-      case "RUB":
-        return `₽${hotel.price_rub}`;
-      default:
-        return `₾${hotel.price_gel}`;
+    let price = null;
+    if (currency === "GEL") price = hotel.price_gel;
+    else if (currency === "USD") price = hotel.price_usd;
+    else if (currency === "EUR") price = hotel.price_eur;
+    else if (currency === "RUB") price = hotel.price_rub;
+    else price = hotel.price_gel;
+    if (typeof price !== 'number' || !isFinite(price) || price <= 0) {
+      return t('price_coming_soon');
     }
+    const symbol = currency === "GEL" ? "₾" : currency === "USD" ? "$" : currency === "EUR" ? "€" : currency === "RUB" ? "₽" : "₾";
+    return `${symbol}${price}`;
   };
 
   return (
@@ -69,21 +90,27 @@ export default function HotelDetailsClient({
                   <p className="text-base text-muted-foreground mb-4">{hotel.description}</p>
                 )}
               </div>
-              <Button
-                variant="outline"
-                className="w-full mt-4"
-                onClick={() => {
-                  // Remove 'Resort', 'Hotel', and 'Motel' from the hotel name
-                  const cleanedName = hotel.name.replace(/\b(Resort|Hotel|Motel)\b/gi, '').replace(/\s+/g, ' ').trim();
-                  const searchString = `${cleanedName} ${hotel.address} ${hotel.lat},${hotel.lng}`;
-                  window.open(
-                    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchString)}`,
-                    "_blank"
-                  );
-                }}
-              >
-                View on Google Maps
-              </Button>
+              <div className="flex flex-col gap-2">
+                <Button variant="outline" className="w-full" onClick={handleLike}>
+                  <Heart className={`w-6 h-6 mr-2 ${isLiked ? "text-red-500 fill-red-500" : ""}`} />
+                  {isLiked ? "Added to Wishlist" : "Add to Wishlist"}
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => {
+                    // Remove 'Resort', 'Hotel', and 'Motel' from the hotel name
+                    const cleanedName = hotel.name.replace(/\b(Resort|Hotel|Motel)\b/gi, '').replace(/\s+/g, ' ').trim();
+                    const searchString = `${cleanedName} ${hotel.address} ${hotel.lat},${hotel.lng}`;
+                    window.open(
+                      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchString)}`,
+                      "_blank"
+                    );
+                  }}
+                >
+                  View on Google Maps
+                </Button>
+              </div>
             </div>
           </div>
         </CardContent>

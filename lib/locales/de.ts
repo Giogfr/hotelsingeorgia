@@ -80,5 +80,7 @@ export const de = {
     answer1: "To book a hotel, browse the list and click 'Book Now'.",
     question2: "Can I cancel my booking?",
     answer2: "Cancellation policies vary by hotel. Check the details when booking."
-  }
+  },
+
+  "price_coming_soon": "Preis: Bald verfügbar"
 }; 

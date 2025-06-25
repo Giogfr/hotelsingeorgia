@@ -134,5 +134,6 @@ export const es = {
     supportFaq: "How do I contact support?",
     supportAnswer: "You can contact us via email or Instagram for assistance.",
     contactUs: "Contact Us"
-  }
+  },
+  "price_coming_soon": "Precio: Próximamente"
 }; 

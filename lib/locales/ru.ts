@@ -9,6 +9,7 @@ export const ru = {
   "region": "Регион",
   "type": "Тип",
   "all": "Все",
+  "price_coming_soon": "Цена: скоро будет",
 
   // Home Page
   "discover_beautiful_georgia": "Откройте для себя прекрасную Грузию",

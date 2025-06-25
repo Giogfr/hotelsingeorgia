@@ -10,6 +10,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import FloatingDonateButton from "@/components/floating-action-button";
 import { SocialFAB } from "@/components/social-fab";
+import { AuthProvider } from "@/contexts/auth-context";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -39,24 +40,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
         suppressHydrationWarning
       >
-        <CurrencyProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <ClickSpark>
-              <BlobCursor />
-              <main className="flex-grow">{children}</main>
-            </ClickSpark>
-            <SocialFAB />
-            <FloatingDonateButton />
-            <Analytics />
-            <SpeedInsights />
-            <Toaster />
-          </ThemeProvider>
-        </CurrencyProvider>
+        {/* Blurred background image overlay */}
+        <div
+          className="fixed inset-0 -z-10 w-full h-full bg-cover bg-center"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80)',
+            filter: 'blur(8px) brightness(0.9)',
+          }}
+          aria-hidden="true"
+        />
+        <AuthProvider>
+          <CurrencyProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <ClickSpark>
+                <BlobCursor />
+                <main className="flex-grow">{children}</main>
+              </ClickSpark>
+              <SocialFAB />
+              <FloatingDonateButton />
+              <Analytics />
+              <SpeedInsights />
+              <Toaster />
+            </ThemeProvider>
+          </CurrencyProvider>
+        </AuthProvider>
       </body>
     </html>
   );

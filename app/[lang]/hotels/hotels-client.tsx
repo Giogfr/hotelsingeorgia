@@ -51,16 +51,14 @@ export default function HotelsClient({ hotels, lang }: { hotels: Hotel[], lang: 
     const symbol = currencySymbols[currency];
     if (currency !== 'GEL' && (typeof price !== 'number' || !isFinite(price) || price <= 0)) {
       const gel = hotel.price_gel;
-      if (typeof gel !== 'number' || !isFinite(gel) || gel <= 0) {
-        return t('noPrice') || 'N/A';
-      }
+      if (typeof gel !== 'number' || !isFinite(gel) || gel <= 0) return t('price_coming_soon');
       if (currency === 'EUR') price = Math.round(gel * 0.34);
       else if (currency === 'USD') price = Math.round(gel * 0.37);
       else if (currency === 'RUB') price = Math.round(gel * 28.82);
       else price = gel;
     }
     if (typeof price !== 'number' || !isFinite(price) || price <= 0) {
-      return t('noPrice') || 'N/A';
+      return t('price_coming_soon');
     }
     return `${symbol}${price.toLocaleString()}`;
   };
@@ -105,9 +103,6 @@ export default function HotelsClient({ hotels, lang }: { hotels: Hotel[], lang: 
   return (
     <div className="bg-background text-foreground min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-end mb-4">
-          <Button onClick={handleRandomHotel} variant="secondary">Random Hotel</Button>
-        </div>
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -142,7 +137,7 @@ export default function HotelsClient({ hotels, lang }: { hotels: Hotel[], lang: 
                   <p className="text-xs mb-0.5">{featuredHotel.address}</p>
                   <p className="text-base font-bold mb-0.5">{getPrice(featuredHotel)} <span className="text-xs font-normal">/ {t('night')}</span></p>
                   <Button asChild size="sm" className="w-full mt-2">
-                    <Link href={`/${lang}/hotel/${featuredHotel.id}`}>{t('viewDetails')} {getPrice(featuredHotel)}</Link>
+                    <Link href={`/${lang}/hotel/${featuredHotel.id}`}>{t('viewDetails')}</Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -183,7 +178,6 @@ export default function HotelsClient({ hotels, lang }: { hotels: Hotel[], lang: 
             </Card>
           </div>
         </div>
-
         {/* Search/Sort Row */}
         <div className="flex flex-col md:flex-row gap-4 mb-8 items-stretch">
           <div className="flex-1 flex flex-col gap-4">
@@ -215,25 +209,22 @@ export default function HotelsClient({ hotels, lang }: { hotels: Hotel[], lang: 
             </div>
           </div>
         </div>
-
         <div className="mb-8">
           <p className="text-lg text-muted-foreground">
             {t('foundHotels', filteredHotels.length)}
           </p>
         </div>
-
+        {/* Hotel Grid */}
         {filteredHotels.length > 0 ? (
-          <div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-          >
-            {filteredHotels.map((hotel) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredHotels.filter(h => !h.featured).map(hotel => (
               <div key={hotel.id}>
                 <Card className="h-full flex flex-col">
                   <CardContent className="p-6 flex flex-col flex-grow">
                     <h3 className="text-xl font-bold mb-3 flex-grow">{hotel.name}</h3>
                     <div className="flex items-center text-sm text-muted-foreground mb-3">
                       <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
-                      <span>{hotel.city}, {hotel.region}</span>
+                      <span>{hotel.city}{hotel.region ? `, ${hotel.region}` : ""}</span>
                     </div>
                     <div className="flex items-center mb-5">
                       {Array.from({ length: 5 }).map((_, i) => (
@@ -243,7 +234,7 @@ export default function HotelsClient({ hotels, lang }: { hotels: Hotel[], lang: 
                     <p className="text-sm text-muted-foreground mb-4">{hotel.address}</p>
                     <p className="text-2xl font-bold mb-4">{getPrice(hotel)} <span className="text-sm font-normal text-muted-foreground">/ {t('night')}</span></p>
                     <Button asChild className="w-full mt-auto">
-                      <Link href={`/${lang}/hotel/${hotel.id}`}>{t('viewDetails')} {getPrice(hotel)}</Link>
+                      <Link href={`/${lang}/hotel/${hotel.id}`}>{t('viewDetails')}</Link>
                     </Button>
                   </CardContent>
                 </Card>
@@ -260,4 +251,4 @@ export default function HotelsClient({ hotels, lang }: { hotels: Hotel[], lang: 
       </div>
     </div>
   )
-} 
+}

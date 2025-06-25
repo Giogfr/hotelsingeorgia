@@ -10,6 +10,7 @@ import { useHomeTranslation } from "@/lib/translations"
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 export function HomePageClient({ cityImages, lang, mixedCityItems }: { cityImages: any[], lang: string, mixedCityItems?: any[] }) {
@@ -18,16 +19,6 @@ export function HomePageClient({ cityImages, lang, mixedCityItems }: { cityImage
     const [showInstall, setShowInstall] = useState(false);
     const [shuffledCityItems, setShuffledCityItems] = useState(mixedCityItems || []);
     const router = useRouter();
-
-    // Redirect to login if not authenticated
-    useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged((user) => {
-        if (!user) {
-          router.replace(`/${lang}/login`);
-        }
-      });
-      return () => unsubscribe();
-    }, [lang, router]);
 
     useEffect(() => {
         const handler = (e) => {

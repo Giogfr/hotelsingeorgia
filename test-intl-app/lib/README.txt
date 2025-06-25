@@ -1,0 +1,1 @@
+This is the lib folder. Copy all your library files from the original project here. 

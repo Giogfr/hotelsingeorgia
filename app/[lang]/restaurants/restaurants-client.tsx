@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -26,6 +26,25 @@ interface RestaurantsClientProps {
 }
 
 function RestaurantCard({ restaurant, t }: { restaurant: Restaurant, t: any }) {
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    setIsLiked(wishlist.includes(restaurant.id));
+  }, [restaurant.id]);
+
+  const handleLike = () => {
+    const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    let updatedWishlist;
+    if (isLiked) {
+      updatedWishlist = wishlist.filter((id: string) => id !== restaurant.id);
+    } else {
+      updatedWishlist = [...wishlist, restaurant.id];
+    }
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+    setIsLiked(!isLiked);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -76,6 +95,13 @@ function RestaurantCard({ restaurant, t }: { restaurant: Restaurant, t: any }) {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+            <Button
+              variant={isLiked ? "default" : "outline"}
+              className="w-full"
+              onClick={handleLike}
+            >
+              {isLiked ? "Added to Wishlist" : "Add to Wishlist"}
+            </Button>
           </div>
         </CardContent>
       </Card>

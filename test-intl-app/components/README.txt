@@ -1,0 +1,1 @@
+This is the components folder. Copy all your component files from the original project here. 

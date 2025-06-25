@@ -13,6 +13,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import FloatingDonateButton from "@/components/floating-action-button";
 import { SocialFAB } from "@/components/social-fab";
+import { NextIntlClientProvider } from 'next-intl';
+import { getTranslations } from '@/lib/translations';
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -27,27 +29,30 @@ export default async function LangLayout({
   params: Promise<{ lang: Language }>;
 }) {
   const { lang } = await params;
+  const messages = getTranslations(lang);
   return (
-    <CurrencyProvider>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <ClickSpark>
-          <BlobCursor />
-          <Header lang={lang} />
-          <main className="flex-grow">{children}</main>
-          <Footer lang={lang} />
-        </ClickSpark>
-        <SocialFAB />
-        <FloatingDonateButton />
-        <Analytics />
-        <SpeedInsights />
-        <Toaster />
-      </ThemeProvider>
-    </CurrencyProvider>
+    <NextIntlClientProvider locale={lang} messages={messages}>
+      <CurrencyProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClickSpark>
+            <BlobCursor />
+            <Header lang={lang} />
+            <main className="flex-grow">{children}</main>
+            <Footer lang={lang} />
+          </ClickSpark>
+          <SocialFAB />
+          <FloatingDonateButton />
+          <Analytics />
+          <SpeedInsights />
+          <Toaster />
+        </ThemeProvider>
+      </CurrencyProvider>
+    </NextIntlClientProvider>
   );
 }
  
