@@ -10,21 +10,7 @@ import { useHomeTranslation } from "@/lib/translations"
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-
-// TODO: Replace with your Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyCvj2kVNe6PORfhoGtLFobc0Z-BNCZzqxU",
-  authDomain: "gstay-5f8cf.firebaseapp.com",
-  projectId: "gstay-5f8cf",
-  storageBucket: "gstay-5f8cf.appspot.com",
-  messagingSenderId: "609330023871",
-  appId: "1:609330023871:web:6357e0d0c2e9c00dc9250a",
-  measurementId: "G-KR00W3QX7N"
-};
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+import { auth } from "@/lib/firebase";
 
 export function HomePageClient({ cityImages, lang, mixedCityItems }: { cityImages: any[], lang: string, mixedCityItems?: any[] }) {
     const t = useHomeTranslation(lang as any);
@@ -35,7 +21,7 @@ export function HomePageClient({ cityImages, lang, mixedCityItems }: { cityImage
 
     // Redirect to login if not authenticated
     useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
         if (!user) {
           router.replace(`/${lang}/login`);
         }

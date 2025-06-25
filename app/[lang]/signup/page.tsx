@@ -1,23 +1,9 @@
 "use client";
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { initializeApp } from "firebase/app";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-// TODO: Replace with your Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyCvj2kVNe6PORfhoGtLFobc0Z-BNCZzqxU",
-  authDomain: "gstay-5f8cf.firebaseapp.com",
-  projectId: "gstay-5f8cf",
-  storageBucket: "gstay-5f8cf.appspot.com",
-  messagingSenderId: "609330023871",
-  appId: "1:609330023871:web:6357e0d0c2e9c00dc9250a",
-  measurementId: "G-KR00W3QX7N"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+import { auth } from "@/lib/firebase";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");

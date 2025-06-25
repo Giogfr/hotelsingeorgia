@@ -1,24 +1,10 @@
 "use client";
 import { useState } from "react";
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
-import { initializeApp } from "firebase/app";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { motion } from "framer-motion";
+import { auth } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { motion } from "framer-motion";
-
-// TODO: Replace with your Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyCvj2kVNe6PORfhoGtLFobc0Z-BNCZzqxU",
-  authDomain: "gstay-5f8cf.firebaseapp.com",
-  projectId: "gstay-5f8cf",
-  storageBucket: "gstay-5f8cf.appspot.com",
-  messagingSenderId: "609330023871",
-  appId: "1:609330023871:web:6357e0d0c2e9c00dc9250a",
-  measurementId: "G-KR00W3QX7N"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
