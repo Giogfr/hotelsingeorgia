@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { motion } from "framer-motion";
 import { auth } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
@@ -33,19 +33,6 @@ export default function LoginPage() {
     setError("");
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
-      setSuccess(true);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGithubSignIn = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      await signInWithPopup(auth, new GithubAuthProvider());
       setSuccess(true);
     } catch (err: any) {
       setError(err.message);
@@ -116,15 +103,6 @@ export default function LoginPage() {
           >
             <svg width="22" height="22" viewBox="0 0 48 48" className="inline-block"><g><path fill="#4285F4" d="M44.5 20H24v8.5h11.7C34.7 33.9 29.8 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.2 4.5 29.4 2.5 24 2.5 12.7 2.5 3.5 11.7 3.5 23S12.7 43.5 24 43.5c10.5 0 20-8.1 20-20 0-1.3-.1-2.1-.3-3.5z"/><path fill="#34A853" d="M6.3 14.7l7 5.1C15.1 17.1 19.2 14 24 14c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.2 4.5 29.4 2.5 24 2.5c-7.2 0-13 5.8-13 13 0 2.1.5 4.1 1.3 5.7z"/><path fill="#FBBC05" d="M24 43.5c5.8 0 10.7-1.9 14.3-5.2l-6.6-5.4c-2.1 1.5-4.8 2.4-7.7 2.4-5.8 0-10.7-3.9-12.5-9.2l-7 5.1C7.2 39.1 14.7 43.5 24 43.5z"/><path fill="#EA4335" d="M44.5 20H24v8.5h11.7c-1.1 3.1-4.1 5.5-7.7 5.5-5.8 0-10.7-3.9-12.5-9.2l-7 5.1C7.2 39.1 14.7 43.5 24 43.5c10.5 0 20-8.1 20-20 0-1.3-.1-2.1-.3-3.5z"/></g></svg>
             Sign in with Google
-          </button>
-          <button
-            type="button"
-            onClick={handleGithubSignIn}
-            disabled={loading}
-            className="flex items-center justify-center gap-2 w-full h-10 sm:h-12 rounded-full bg-gray-900 text-white font-semibold text-base sm:text-lg shadow border border-gray-800 hover:bg-gray-800 transition-all duration-200"
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="inline-block"><path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.749 0 .268.18.579.688.481C19.138 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z" fill="currentColor"/></svg>
-            Sign in with GitHub
           </button>
         </div>
       </motion.form>
